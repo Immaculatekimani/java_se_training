@@ -10,8 +10,6 @@ public class atmMachine {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        atmMachine app = new atmMachine();
-
         int trials = 0;
         String userPassword;
         String userName;
@@ -22,7 +20,8 @@ public class atmMachine {
             System.out.print("Please enter your password: ");
             userPassword = scanner.nextLine();
             if (userPassword.equals(DB_PASSWORD)) {
-                app.atmMenu();
+                System.out.println("WELCOME "+ userName.toUpperCase());
+                atmMenu();
                 break;
             } else {
                 trials++;
@@ -39,7 +38,7 @@ public class atmMachine {
         scanner.close();
     }
 
-    public void atmMenu() {
+    public static void atmMenu() {
         while (true) {
             // the main display area
             System.out.println("***************************************************************");
