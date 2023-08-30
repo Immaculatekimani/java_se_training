@@ -87,7 +87,9 @@ public class atmMachine {
     }
 
     public static void checkBalance() {
-        System.out.println("Your balance is Ksh: " + balance);
+        System.out.println("DATE: " + java.time.LocalDate.now());
+        System.out.println("TIME: " + java.time.LocalTime.now());
+        System.out.println("ACCOUNT BALANCE: " + balance);
     }
 
     public static void atmDeposit() throws InterruptedException {
