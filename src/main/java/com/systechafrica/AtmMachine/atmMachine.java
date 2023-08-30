@@ -3,12 +3,14 @@ package com.systechafrica.AtmMachine;
 import java.util.Scanner;
 
 public class atmMachine {
+    private static final String DB_PASSWORD = "Admin123";
+    private static final double INITIAL_BAL = 1000.00;
+    private static double balance = INITIAL_BAL;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         atmMachine app = new atmMachine();
 
-        final String DB_PASSWORD = "Admin123";
-        final double INITIAL_BAL = 1000.00;
         int trials = 0;
         String userPassword;
         String userName;
@@ -78,6 +80,10 @@ public class atmMachine {
             }
         }
 
+    }
+
+    public void checkBalance() {
+        System.out.println("Your balance is Ksh: " + balance);
     }
 
 }
