@@ -61,7 +61,7 @@ public class atmMachine {
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
-                    System.out.println("YOu are checking balance");
+                    checkBalance();
                     break;
                 case 2:
                     System.out.println("Make a deposit");
@@ -82,7 +82,7 @@ public class atmMachine {
 
     }
 
-    public void checkBalance() {
+    public static void checkBalance() {
         System.out.println("Your balance is Ksh: " + balance);
     }
 
