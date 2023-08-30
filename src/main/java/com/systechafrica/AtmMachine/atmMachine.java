@@ -6,9 +6,10 @@ public class atmMachine {
     private static final String DB_PASSWORD = "Admin123";
     private static final double INITIAL_BAL = 1000.00;
     private static double balance = INITIAL_BAL;
+    static Scanner scanner = new Scanner(System.in);
+
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         atmMachine app = new atmMachine();
 
         int trials = 0;
@@ -21,7 +22,7 @@ public class atmMachine {
             System.out.print("Please enter your password: ");
             userPassword = scanner.nextLine();
             if (userPassword.equals(DB_PASSWORD)) {
-                app.atmMenu(scanner);
+                app.atmMenu();
                 break;
             } else {
                 trials++;
@@ -38,7 +39,7 @@ public class atmMachine {
         scanner.close();
     }
 
-    public void atmMenu(Scanner scanner) {
+    public void atmMenu() {
         while (true) {
             // the main display area
             System.out.println("***************************************************************");
@@ -64,7 +65,7 @@ public class atmMachine {
                     checkBalance();
                     break;
                 case 2:
-                    System.out.println("Make a deposit");
+                    atmDeposit();
                     break;
                 case 3:
                     System.out.println("Make a withdraw");
@@ -84,6 +85,14 @@ public class atmMachine {
 
     public static void checkBalance() {
         System.out.println("Your balance is Ksh: " + balance);
+    }
+
+    public static void atmDeposit(){
+        System.out.println("Enter amount to deposit");
+        double userDeposit = scanner.nextDouble();
+        balance+= userDeposit;
+        System.out.println("Success! Your balance is now: "+ balance);
+
     }
 
 }
