@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class atmMachine {
     private static final String DB_PASSWORD = "Admin123";
     private static final double INITIAL_BAL = 1000.00;
+    private static final double WITHDRAW_PERCENT = 0.02;
     private static double balance = INITIAL_BAL;
     static Scanner scanner = new Scanner(System.in);
 
@@ -68,7 +69,7 @@ public class atmMachine {
                     atmDeposit();
                     break;
                 case 3:
-                    System.out.println("Make a withdraw");
+                    atmWithdraw();;
                     break;
                 case 4:
                     System.out.println("Make a transfer");
@@ -93,6 +94,21 @@ public class atmMachine {
         balance+= userDeposit;
         System.out.println("Success! Your balance is now: "+ balance);
 
+    }
+    public static void atmWithdraw(){
+        System.out.println("Please enter the amount to withdraw");
+        double withdrawAmount = scanner.nextDouble();
+        double withdrawCharge = withdrawAmount * WITHDRAW_PERCENT;
+        double withdrawable = withdrawAmount + withdrawCharge;
+        if(withdrawable > balance){
+            System.out.println("Sorry insufficient funds to withdraw Ksh: " + withdrawAmount);
+        }else if(withdrawAmount < 0){
+            System.out.println("Please enter a positive value");
+        }else{
+            balance -= withdrawable ;
+            System.out.println("Withdrawal of Ksh "+withdrawAmount+" successful new balance: " + balance+ "charges: "+ withdrawCharge);
+        }
+        
     }
 
 }
