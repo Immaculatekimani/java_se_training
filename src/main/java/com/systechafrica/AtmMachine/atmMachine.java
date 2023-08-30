@@ -9,7 +9,6 @@ public class atmMachine {
     private static double balance = INITIAL_BAL;
     static Scanner scanner = new Scanner(System.in);
 
-
     public static void main(String[] args) {
         atmMachine app = new atmMachine();
 
@@ -69,10 +68,10 @@ public class atmMachine {
                     atmDeposit();
                     break;
                 case 3:
-                    atmWithdraw();;
+                    atmWithdraw();
                     break;
                 case 4:
-                    System.out.println("Make a transfer");
+                    atmTransfer();
                     break;
                 case 5:
                     System.out.println("Sad to let you go");
@@ -88,27 +87,47 @@ public class atmMachine {
         System.out.println("Your balance is Ksh: " + balance);
     }
 
-    public static void atmDeposit(){
+    public static void atmDeposit() {
         System.out.println("Enter amount to deposit");
         double userDeposit = scanner.nextDouble();
-        balance+= userDeposit;
-        System.out.println("Success! Your balance is now: "+ balance);
+        balance += userDeposit;
+        System.out.println("Success! Your balance is now: " + balance);
 
     }
-    public static void atmWithdraw(){
-        System.out.println("Please enter the amount to withdraw");
+
+    public static void atmWithdraw() {
+        System.out.print("Please enter the amount to withdraw: ");
         double withdrawAmount = scanner.nextDouble();
         double withdrawCharge = withdrawAmount * WITHDRAW_PERCENT;
         double withdrawable = withdrawAmount + withdrawCharge;
-        if(withdrawable > balance){
+        if (withdrawable > balance) {
             System.out.println("Sorry insufficient funds to withdraw Ksh: " + withdrawAmount);
-        }else if(withdrawAmount < 0){
+        } else if (withdrawAmount < 0) {
             System.out.println("Please enter a positive value");
-        }else{
-            balance -= withdrawable ;
-            System.out.println("Withdrawal of Ksh "+withdrawAmount+" successful new balance: " + balance+ "charges: "+ withdrawCharge);
+        } else {
+            balance -= withdrawable;
+            System.out.println("Withdrawal of Ksh " + withdrawAmount + " successful new balance: " + balance
+                    + " charges: " + withdrawCharge);
         }
-        
+
+    }
+
+    public static void atmTransfer() {
+        System.out.print("Please enter recepient account: ");
+        String recepientAccount = scanner.next();
+        System.out.print("Please enter the amount you want to transfer: ");
+        double transferAmount = scanner.nextDouble();
+
+        if (transferAmount > balance) {
+            System.out.println("Sorry insufficient funds to transfer Ksh: " + transferAmount);
+        } else if (transferAmount < 0) {
+            System.out.println("Please enter a positive value");
+        } else {
+
+            balance -= transferAmount;
+            System.out.println("Transer of Ksh " + transferAmount + " to account: " + recepientAccount
+                    + " successful new balance: " + balance);
+        }
     }
 
 }
