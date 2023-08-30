@@ -9,7 +9,7 @@ public class atmMachine {
     private static double balance = INITIAL_BAL;
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int trials = 0;
         String userPassword;
         String userName;
@@ -20,7 +20,8 @@ public class atmMachine {
             System.out.print("Please enter your password: ");
             userPassword = scanner.nextLine();
             if (userPassword.equals(DB_PASSWORD)) {
-                System.out.println("WELCOME "+ userName.toUpperCase());
+                System.out.println("WELCOME " + userName.toUpperCase());
+                Thread.sleep(2000);
                 atmMenu();
                 break;
             } else {
@@ -38,7 +39,7 @@ public class atmMachine {
         scanner.close();
     }
 
-    public static void atmMenu() {
+    public static void atmMenu() throws InterruptedException {
         while (true) {
             // the main display area
             System.out.println("***************************************************************");
@@ -59,6 +60,8 @@ public class atmMachine {
             System.out.println("Choose your option: ");
             // Dealing with options
             int option = scanner.nextInt();
+            System.out.println("LOADING...");
+            Thread.sleep(1500);
             switch (option) {
                 case 1:
                     checkBalance();
@@ -73,11 +76,12 @@ public class atmMachine {
                     atmTransfer();
                     break;
                 case 5:
-                    System.out.println("Sad to let you go");
+                    System.out.println("Thank you for banking with us!");
                     return;
                 default:
                     System.out.println("Please enter a valid option");
             }
+            Thread.sleep(2000);
         }
 
     }
@@ -86,19 +90,23 @@ public class atmMachine {
         System.out.println("Your balance is Ksh: " + balance);
     }
 
-    public static void atmDeposit() {
+    public static void atmDeposit() throws InterruptedException {
         System.out.println("Enter amount to deposit");
         double userDeposit = scanner.nextDouble();
+        System.out.println("LOADING...");
+        Thread.sleep(1500);
         balance += userDeposit;
         System.out.println("Success! Your balance is now: " + balance);
 
     }
 
-    public static void atmWithdraw() {
+    public static void atmWithdraw() throws InterruptedException {
         System.out.print("Please enter the amount to withdraw: ");
         double withdrawAmount = scanner.nextDouble();
         double withdrawCharge = withdrawAmount * WITHDRAW_PERCENT;
         double withdrawable = withdrawAmount + withdrawCharge;
+        System.out.println("LOADING...");
+        Thread.sleep(1500);
         if (withdrawable > balance) {
             System.out.println("Sorry insufficient funds to withdraw Ksh: " + withdrawAmount);
         } else if (withdrawAmount < 0) {
@@ -111,12 +119,13 @@ public class atmMachine {
 
     }
 
-    public static void atmTransfer() {
+    public static void atmTransfer() throws InterruptedException {
         System.out.print("Please enter recepient account: ");
         String recepientAccount = scanner.next();
         System.out.print("Please enter the amount you want to transfer: ");
         double transferAmount = scanner.nextDouble();
-
+        System.out.println("LOADING...");
+        Thread.sleep(1500);
         if (transferAmount > balance) {
             System.out.println("Sorry insufficient funds to transfer Ksh: " + transferAmount);
         } else if (transferAmount < 0) {
