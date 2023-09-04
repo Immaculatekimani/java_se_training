@@ -60,27 +60,32 @@ public class ATMMachine {
             System.out.println("***************************************************************");
             System.out.println("Choose your option: ");
             // Dealing with options
-            int option = scanner.nextInt();
-            System.out.println("LOADING...");
-            Thread.sleep(1500);
-            switch (option) {
-                case 1:
-                    checkBalance();
-                    break;
-                case 2:
-                    atmDeposit();
-                    break;
-                case 3:
-                    atmWithdraw();
-                    break;
-                case 4:
-                    atmTransfer();
-                    break;
-                case 5:
-                    System.out.println("Thank you for banking with us!");
-                    return;
-                default:
-                    System.out.println("Please enter a valid option");
+            try {
+                int option = scanner.nextInt();
+                System.out.println("LOADING...");
+                Thread.sleep(1500);
+                switch (option) {
+                    case 1:
+                        checkBalance();
+                        break;
+                    case 2:
+                        atmDeposit();
+                        break;
+                    case 3:
+                        atmWithdraw();
+                        break;
+                    case 4:
+                        atmTransfer();
+                        break;
+                    case 5:
+                        System.out.println("Thank you for banking with us!");
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option");
+                }
+            } catch (Exception e) {
+                scanner.nextLine();
+                System.out.println("Only numeric values allowed");
             }
             Thread.sleep(2000);
         }
