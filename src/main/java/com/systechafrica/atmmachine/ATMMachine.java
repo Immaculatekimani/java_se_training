@@ -3,26 +3,27 @@ package com.systechafrica.atmmachine;
 import java.util.Scanner;
 
 public class ATMMachine {
-    private static final String DB_PASSWORD = "Admin123";
-    private static final double INITIAL_BAL = 1000.00;
-    private static final double WITHDRAW_PERCENT = 0.02;
-    private static double balance = INITIAL_BAL;
-    static Scanner scanner = new Scanner(System.in);
+    final String DB_PASSWORD = "Admin123";
+    final double INITIAL_BAL = 1000.00;
+    final double WITHDRAW_PERCENT = 0.02;
+    double balance = INITIAL_BAL;
+    Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws InterruptedException {
         int trials = 0;
         String userPassword;
         String userName;
+        ATMMachine app = new ATMMachine();
 
         while (trials < 3) {
             System.out.print("Please enter you username: ");
-            userName = scanner.nextLine();
+            userName = app.scanner.nextLine();
             System.out.print("Please enter your password: ");
-            userPassword = scanner.nextLine();
-            if (userPassword.equals(DB_PASSWORD)) {
+            userPassword = app.scanner.nextLine();
+            if (userPassword.equals(app.DB_PASSWORD)) {
                 System.out.println("WELCOME " + userName.toUpperCase());
                 Thread.sleep(2000);
-                atmMenu();
+                app.atmMenu();
                 break;
             } else {
                 trials++;
@@ -36,10 +37,10 @@ public class ATMMachine {
 
         }
 
-        scanner.close();
+        app.scanner.close();
     }
 
-    public static void atmMenu() throws InterruptedException {
+    public void atmMenu() throws InterruptedException {
         while (true) {
             // the main display area
             System.out.println("***************************************************************");
@@ -86,13 +87,13 @@ public class ATMMachine {
 
     }
 
-    public static void checkBalance() {
+    public void checkBalance() {
         System.out.println("DATE: " + java.time.LocalDate.now());
         System.out.println("TIME: " + java.time.LocalTime.now());
         System.out.println("ACCOUNT BALANCE: " + balance);
     }
 
-    public static void atmDeposit() throws InterruptedException {
+    public void atmDeposit() throws InterruptedException {
         System.out.println("Enter amount to deposit");
         double userDeposit = scanner.nextDouble();
         System.out.println("LOADING...");
@@ -102,7 +103,7 @@ public class ATMMachine {
 
     }
 
-    public static void atmWithdraw() throws InterruptedException {
+    public void atmWithdraw() throws InterruptedException {
         System.out.print("Please enter the amount to withdraw: ");
         double withdrawAmount = scanner.nextDouble();
         double withdrawCharge = withdrawAmount * WITHDRAW_PERCENT;
@@ -121,7 +122,7 @@ public class ATMMachine {
 
     }
 
-    public static void atmTransfer() throws InterruptedException {
+    public void atmTransfer() throws InterruptedException {
         System.out.print("Please enter recepient account: ");
         String recepientAccount = scanner.next();
         System.out.print("Please enter the amount you want to transfer: ");
