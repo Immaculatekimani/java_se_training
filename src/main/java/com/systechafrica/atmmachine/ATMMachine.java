@@ -1,8 +1,8 @@
-package com.systechafrica.AtmMachine;
+package com.systechafrica.atmmachine;
 
 import java.util.Scanner;
 
-public class atmMachine {
+public class ATMMachine {
     private static final String DB_PASSWORD = "Admin123";
     private static final double INITIAL_BAL = 1000.00;
     private static final double WITHDRAW_PERCENT = 0.02;
