@@ -9,6 +9,7 @@ public class Pos {
     final int MAX_ITEMS = 1000;
     int noOfItems = 0;
     Item[] items = new Item[MAX_ITEMS];
+    double totalAmount = 0.0;
 
     public static void main(String[] args) throws InterruptedException {
         Operations opp = new Operations();
@@ -39,10 +40,11 @@ public class Pos {
                             } while (isRepeat);
                             break;
                         case 2:
+                            app.displayReceipt();
                             app.makePayments();
                             break;
                         case 3:
-                            System.out.println("receipt");
+                            app.displayReceipt();
                             break;
                         case 4:
                             return;
@@ -93,20 +95,8 @@ public class Pos {
     }
 
     public void makePayments() {
-        System.out.println("Item code \t item quantity \t unit price \t Total Value");
-        double totalAmount = 0.0;
+
         double change = 0.0;
-        for (int i = 0; i < noOfItems; i++) {
-            Item item = items[i];
-            double totalValue = item.getQuantity() * item.getPrice();
-            System.out.println(item.getItemCode() + "\t\t  " + item.getQuantity() + "\t\t  " + item.getPrice()
-                    + "\t\t  " + totalValue);
-            totalAmount += totalValue;
-        }
-        System.out.println("***************************************************************");
-        System.out.print("Total: " + totalAmount);
-        System.out.println();
-        System.out.println("***************************************************************");
         System.out.println("Enter the amount given by customer:");
         System.out.println();
         double payment = scanner.nextDouble();
@@ -124,6 +114,24 @@ public class Pos {
         } else {
             System.out.println("Insufficient Funds!");
         }
+
+    }
+
+    public void displayReceipt() {
+        System.out.println("Item code \t item quantity \t unit price \t Total Value");
+        totalAmount = 0;
+        for (int i = 0; i < noOfItems; i++) {
+            Item item = items[i];
+            double totalValue = item.getQuantity() * item.getPrice();
+            System.out.println(item.getItemCode() + "\t\t  " + item.getQuantity() + "\t\t  " + item.getPrice()
+                    + "\t\t  " + totalValue);
+            totalAmount += totalValue;
+        }
+        
+        System.out.println("***************************************************************");
+        System.out.print("Total: " + totalAmount);
+        System.out.println();
+        System.out.println("***************************************************************");
 
     }
 
