@@ -65,7 +65,7 @@ public class Hotel {
                             // payment process
                             app.displayBill(order);
                             app.makePayments(order);
-                           
+                            isRepeat = true;
                         } else if (makePay == 2) {
                             // show the menu;
                             isRepeat = true;
@@ -126,6 +126,7 @@ public class Hotel {
         double payment = scanner.nextDouble();
         if (payment >= order.getTotalAmount()) {
             change = payment - order.getTotalAmount();
+            order.clearOrder();
             System.out.print("Your balance is:   " + change);
             System.out.println();
             System.out.println("***************************************************************");

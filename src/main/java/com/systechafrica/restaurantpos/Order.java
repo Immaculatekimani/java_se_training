@@ -15,6 +15,12 @@ public class Order {
             }
         }
     }
+    public void clearOrder(){
+        for (int i = 0; i < items.length; i++) {
+            items[i] = null;
+        }
+        totalAmount = 0;
+    }
 
     public double getTotalAmount() {
         return totalAmount;
