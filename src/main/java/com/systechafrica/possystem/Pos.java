@@ -15,7 +15,7 @@ public class Pos {
         boolean isLogin = opp.login();
         Pos app = new Pos();
         if (isLogin) {
-            System.out.println("Welcome " + opp.userName.toUpperCase() + "!!!");
+            System.out.println("Welcome " + opp.userName.toUpperCase());
             while (true) {
                 app.mainMenu();
                 try {
@@ -39,7 +39,7 @@ public class Pos {
                             } while (isRepeat);
                             break;
                         case 2:
-                            System.out.println("pay");
+                            app.makePayments();
                             break;
                         case 3:
                             System.out.println("receipt");
@@ -89,6 +89,41 @@ public class Pos {
 
         items[noOfItems] = newItem; // add the item to the array
         noOfItems++;
+
+    }
+
+    public void makePayments() {
+        System.out.println("Item code \t item quantity \t unit price \t Total Value");
+        double totalAmount = 0.0;
+        double change = 0.0;
+        for (int i = 0; i < noOfItems; i++) {
+            Item item = items[i];
+            double totalValue = item.getQuantity() * item.getPrice();
+            System.out.println(item.getItemCode() + "\t\t  " + item.getQuantity() + "\t\t  " + item.getPrice()
+                    + "\t\t  " + totalValue);
+            totalAmount += totalValue;
+        }
+        System.out.println("***************************************************************");
+        System.out.print("Total: " + totalAmount);
+        System.out.println();
+        System.out.println("***************************************************************");
+        System.out.println("Enter the amount given by customer:");
+        System.out.println();
+        double payment = scanner.nextDouble();
+        if (payment >= totalAmount) {
+            change = payment - totalAmount;
+            totalAmount = 0;
+            noOfItems = 0; // make the list empty after pay
+            System.out.print("Change:   " + change);
+            System.out.println();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("THANK YOU FOR SHOPPING WITH US \n");
+            System.out.println("***************************************************************");
+
+        } else {
+            System.out.println("Insufficient Funds!");
+        }
 
     }
 
