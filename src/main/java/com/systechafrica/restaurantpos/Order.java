@@ -11,6 +11,7 @@ public class Order {
             if(items[index] == null){
                 items[index] = item;
                 totalAmount += item.getItemPrice();
+                break;
             }
         }
     }
