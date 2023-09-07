@@ -6,6 +6,7 @@ import com.systechafrica.commonoperations.Operations;
 
 public class Hotel {
     Scanner scanner = new Scanner(System.in);
+    double totalBalance = 0;
 
     public static void main(String[] args) throws InterruptedException {
         Operations opp = new Operations();
@@ -62,12 +63,14 @@ public class Hotel {
                         int makePay = app.scanner.nextInt();
                         if (makePay == 1) {
                             // payment process
-                            isRepeat = false;
+                            app.displayBill(order);
+                            app.makePayments(order);
+                           
                         } else if (makePay == 2) {
                             // show the menu;
                             isRepeat = true;
                         }
-                        
+
                     }
 
                 } catch (Exception e) {
@@ -99,5 +102,40 @@ public class Hotel {
         System.out.println("6. PILAU VEG-------------------------------------------------90\n");
         System.out.println("7. QUIT");
         System.out.println("Choose an option: ");
+    }
+
+    public void displayBill(Order order) {
+        System.out.println("Pay Now For: ");
+        MenuItem[] items = order.getItems();
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null) {
+                System.out.println(items[i].getItemName() + "-------------------" + items[i].getItemPrice());
+            }
+        }
+        System.out.println("***************************************************************");
+        System.out.println("Total:------------" + order.getTotalAmount());
+
+    }
+
+    public void makePayments(Order order) {
+
+        scanner.nextLine();
+        double change = 0.0;
+        System.out.println("Enter amount to pay:");
+        System.out.println();
+        double payment = scanner.nextDouble();
+        if (payment >= order.getTotalAmount()) {
+            change = payment - order.getTotalAmount();
+            System.out.print("Your balance is:   " + change);
+            System.out.println();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("THANK YOU FOR SHOPPING WITH US \n");
+            System.out.println("***************************************************************");
+
+        } else {
+            System.out.println("Insufficient Funds!");
+        }
+
     }
 }
