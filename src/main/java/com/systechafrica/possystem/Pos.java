@@ -6,6 +6,9 @@ import com.systechafrica.commonoperations.Operations;
 
 public class Pos {
     Scanner scanner = new Scanner(System.in);
+    final int MAX_ITEMS = 1000;
+    int noOfItems = 0;
+    Item[] items = new Item[MAX_ITEMS];
 
     public static void main(String[] args) throws InterruptedException {
         Operations opp = new Operations();
@@ -22,7 +25,18 @@ public class Pos {
 
                     switch (option) {
                         case 1:
-                            System.out.println("add");
+                            boolean isRepeat = false;
+                            do {
+                                app.addItem();
+                                System.out.println("Add another item? \n 1: Yes    \n 2: No");
+                                int choice = app.scanner.nextInt();
+                                if (choice == 1) {
+                                    isRepeat = true;
+                                } else if (choice == 2) {
+                                    isRepeat = false;
+                                }
+
+                            } while (isRepeat);
                             break;
                         case 2:
                             System.out.println("pay");
@@ -59,6 +73,22 @@ public class Pos {
         System.out.println("4. QUIT");
         System.out.println();
         System.out.println("Choose an option: ");
+
+    }
+
+    public void addItem() {
+
+        System.out.print("Enter item unit code: ");
+        String itemCode = scanner.next();
+        System.out.print("Enter item quantity: ");
+        int itemQuantity = scanner.nextInt();
+        System.out.print("Enter item price: ");
+        double itemPrice = scanner.nextDouble();
+
+        Item newItem = new Item(itemCode, itemQuantity, itemPrice);
+
+        items[noOfItems] = newItem; // add the item to the array
+        noOfItems++;
 
     }
 
