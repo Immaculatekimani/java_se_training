@@ -127,7 +127,7 @@ public class Pos {
                     + "\t\t  " + totalValue);
             totalAmount += totalValue;
         }
-        
+
         System.out.println("***************************************************************");
         System.out.print("Total: " + totalAmount);
         System.out.println();
