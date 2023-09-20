@@ -3,9 +3,9 @@ package com.systechafrica.interfaces;
 public interface BookController {
     Book createBook(Book book);
 
-    boolean readBook(String isbn);
+    Book findBook(String isbn);
 
-    Book updateBook(String id, String isbn, String title, String authorName);
+    Book updateBook(String isbn, String title);
 
     void deleteBook(String isbn);
 

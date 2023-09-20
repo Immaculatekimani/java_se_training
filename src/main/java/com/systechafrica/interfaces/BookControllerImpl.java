@@ -3,37 +3,46 @@ package com.systechafrica.interfaces;
 import java.util.UUID;
 
 public class BookControllerImpl implements BookController {
+    Book[] library = new Book[10];
 
     @Override
     public Book createBook(Book book) {
         book.setId(UUID.randomUUID().toString());
+        for (int i = 0; i < library.length; i++) {
+            if (library[i] == null) {
+                library[i] = book;
+            }
+        }
         return book;
     }
 
     @Override
-    public boolean readBook(String isbn) {
-
-        if (isbn.equals("A21")) {
-            return true;
+    public Book findBook(String isbn) {
+        for (Book i : library) {
+            if (i.getIsbn().equals(isbn)) {
+                return i;
+            }
         }
-        return false;
+        return null;
+
     }
 
     @Override
-    public Book updateBook(String id, String isbn, String title, String authorName) {
-        Book bookUpdate = new Book(isbn, title, authorName);
-        bookUpdate.setId(id);
-        return bookUpdate;
+    public Book updateBook(String isbn, String title) {
+        Book book = findBook(isbn);
+        book.setTitle(title);
+        return book;
     }
 
     @Override
     public void deleteBook(String isbn) {
-        if (isbn.equals("A30")) {
-            System.out.println("Book deleted successfully!");
-        } else {
-            System.out.println("The book does not exist");
+        for (int i = 0; i < library.length; i++) {
+            if ((library[i] != null) && (library[i].getIsbn().equals(isbn))) {
+                library[i] = null;
+                System.out.println("Book successfully deleted");
+                return;
+            }
         }
-
     }
 
 }
