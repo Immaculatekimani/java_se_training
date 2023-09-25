@@ -2,7 +2,9 @@ package com.systechafrica.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -38,6 +40,29 @@ public class DatabaseDemo {
             String insertQuery = "insert into tasks (title,start_date,due_date,status,priority,description)values('Add driver to the pom.xml','2023-09-22','2023-09-25',0,1,'updating drivers to the class path');";
             int numberOfRowsInserted = statement.executeUpdate(insertQuery);
             LOGGER.info("Number of rows inserted: " + numberOfRowsInserted);
+
+            //access the records
+            String allRecords = "SELECT * from tasks;";
+            ResultSet resultSet = statement.executeQuery(allRecords);
+            while(resultSet.next()){
+                // task_id,title,start_date,due_date,status,priority,description
+                int id = resultSet.getInt("task_id");
+                String title = resultSet.getString("title");
+                LocalDate startDate = LocalDate.parse(resultSet.getString("start_date"));
+                LocalDate dueDate = LocalDate.parse(resultSet.getString("due_date"));
+                int status = resultSet.getInt("status");
+                int priority = resultSet.getInt("priority");
+                String description = resultSet.getString("description");
+
+                //map to object
+                Task dbTask = new Task(id, title, startDate, dueDate, status, priority, description);
+
+                System.out.println(dbTask);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
 
         } catch (Exception e) {
             LOGGER.severe("Unable to perform operation" + e.getMessage());
