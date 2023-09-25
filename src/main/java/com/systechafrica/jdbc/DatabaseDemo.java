@@ -41,10 +41,10 @@ public class DatabaseDemo {
             int numberOfRowsInserted = statement.executeUpdate(insertQuery);
             LOGGER.info("Number of rows inserted: " + numberOfRowsInserted);
 
-            //access the records
+            // access the records
             String allRecords = "SELECT * from tasks;";
             ResultSet resultSet = statement.executeQuery(allRecords);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 // task_id,title,start_date,due_date,status,priority,description
                 int id = resultSet.getInt("task_id");
                 String title = resultSet.getString("title");
@@ -54,7 +54,7 @@ public class DatabaseDemo {
                 int priority = resultSet.getInt("priority");
                 String description = resultSet.getString("description");
 
-                //map to object
+                // map to object
                 Task dbTask = new Task(id, title, startDate, dueDate, status, priority, description);
 
                 System.out.println(dbTask);
