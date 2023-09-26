@@ -74,6 +74,7 @@ public class Pos {
                                 app.displayReceipt();
                                 break;
                             case 4:
+                                app.clearItems();
                                 showMenu = false;
                                 return;
                             default:
@@ -145,10 +146,11 @@ public class Pos {
         preparedStatement.setDouble(3, itemPrice);
         int rowsAffected = preparedStatement.executeUpdate();
         LOGGER.info(rowsAffected + " item has been added ");
+        noOfItems++;
 
     }
 
-    public void makePayments() {
+    public void makePayments() throws SQLException {
         if (noOfItems == 0) {
             System.out.println("Please select an item then make payment.");
         } else {
@@ -159,13 +161,13 @@ public class Pos {
             if (payment >= totalAmount) {
                 change = payment - totalAmount;
                 totalAmount = 0;
-                noOfItems = 0; // make the list empty after pay
                 System.out.print("Change:   " + change);
                 System.out.println();
                 System.out.println("***************************************************************");
                 System.out.println();
                 System.out.println("THANK YOU FOR SHOPPING WITH US \n");
                 System.out.println("***************************************************************");
+                clearItems();
 
             } else {
                 System.out.println("Insufficient Funds!");
@@ -176,50 +178,30 @@ public class Pos {
     }
 
     public void displayReceipt() throws SQLException {
+        if (noOfItems == 0) {
+            System.out.println("Sorry no items have been selected");
+        } else {
+            Connection connection = databaseConnection();
+            Statement statement = connection.createStatement();
+            totalAmount = 0;
+            System.out.println("Item code \t item quantity \t unit price \t Total Value");
 
-        Connection connection = databaseConnection();
-        Statement statement = connection.createStatement();
-        totalAmount = 0;
-        System.out.println("Item code \t item quantity \t unit price \t Total Value");
-
-        // get items from database
-        String selectItems = "SELECT * FROM items;";
-        ResultSet results = statement.executeQuery(selectItems);
-        while (results.next()) {
-            int id = results.getInt("item_id");
-            String itemCode = results.getString("item_code");
-            int quantity = results.getInt("item_quantity");
-            double price = results.getDouble("item_price");
-            double totalValue = quantity * price;
-            System.out.println(itemCode + "\t\t  " + quantity + "\t\t  " + price + "\t\t  " + totalValue);
-            totalAmount += totalValue;
+            // get items from database
+            String selectItems = "SELECT * FROM items;";
+            ResultSet results = statement.executeQuery(selectItems);
+            while (results.next()) {
+                String itemCode = results.getString("item_code");
+                int quantity = results.getInt("item_quantity");
+                double price = results.getDouble("item_price");
+                double totalValue = quantity * price;
+                System.out.println(itemCode + "\t\t  " + quantity + "\t\t  " + price + "\t\t  " + totalValue);
+                totalAmount += totalValue;
+            }
+            System.out.println("***************************************************************");
+            System.out.print("Total: " + totalAmount);
+            System.out.println();
+            System.out.println("***************************************************************");
         }
-        System.out.println("***************************************************************");
-        System.out.print("Total: " + totalAmount);
-        System.out.println();
-        System.out.println("***************************************************************");
-
-        // if (noOfItems == 0) {
-        // System.out.println("Sorry no items have been selected!");
-        // } else {
-        // System.out.println("Item code \t item quantity \t unit price \t Total
-        // Value");
-        // totalAmount = 0;
-        // for (int i = 0; i < noOfItems; i++) {
-        // Item item = items[i];
-        // double totalValue = item.getQuantity() * item.getPrice();
-        // System.out.println(item.getItemCode() + "\t\t " + item.getQuantity() + "\t\t
-        // " + item.getPrice()
-        // + "\t\t " + totalValue);
-        // totalAmount += totalValue;
-        // }
-
-        // System.out.println("***************************************************************");
-        // System.out.print("Total: " + totalAmount);
-        // System.out.println();
-        // System.out.println("***************************************************************");
-
-        // }
 
     }
 
@@ -228,8 +210,17 @@ public class Pos {
         String connectionUrl = "jdbc:mysql://localhost:3309/pos";
         String user = "javase";
         String password = "javase";
-        LOGGER.info("Connected successfully!");
         return DriverManager.getConnection(connectionUrl, user, password);
+
+    }
+
+    public void clearItems() throws SQLException {
+        // make the table empty
+        Connection connection = databaseConnection();
+        Statement statement = connection.createStatement();
+        String deleteItems = "DELETE FROM items;";
+        statement.executeUpdate(deleteItems);
+        noOfItems = 0;
 
     }
 
