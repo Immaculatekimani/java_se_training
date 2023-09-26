@@ -1,5 +1,6 @@
 package com.systechafrica.possystemupdate;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.systechafrica.commonoperations.Operations;
@@ -11,61 +12,67 @@ public class Pos {
     Item[] items = new Item[MAX_ITEMS];
     double totalAmount = 0.0;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Operations opp = new Operations();
-        boolean isLogin = opp.login();
-        Pos app = new Pos();
-        if (isLogin) {
-            System.out.println("Welcome " + opp.userName.toUpperCase());
-            boolean showMenu = true;
-            while (showMenu) {
-                app.mainMenu();
-                try {
-                    int option = app.scanner.nextInt();
-                    System.out.println("LOADING...");
-                    Thread.sleep(1500);
+        boolean isLogin;
+        try {
+            isLogin = opp.login();
+            Pos app = new Pos();
+            if (isLogin) {
+                System.out.println("Welcome " + opp.userName.toUpperCase());
+                boolean showMenu = true;
+                while (showMenu) {
+                    app.mainMenu();
+                    try {
+                        int option = app.scanner.nextInt();
+                        System.out.println("LOADING...");
+                        Thread.sleep(1500);
 
-                    switch (option) {
-                        case 1:
-                            boolean isRepeat = false;
-                            app.addItem();
-                            do {
+                        switch (option) {
+                            case 1:
+                                boolean isRepeat = false;
+                                app.addItem();
+                                do {
 
-                                System.out.println("Add another item? \n 1: Yes    \n 2: No");
-                                int choice = app.scanner.nextInt();
-                                if (choice == 1) {
-                                    isRepeat = true;
-                                    app.addItem();
-                                } else if (choice == 2) {
-                                    isRepeat = false;
-                                } else {
-                                    System.out.println("Please select either 1 or 2");
-                                    isRepeat = true;
+                                    System.out.println("Add another item? \n 1: Yes    \n 2: No");
+                                    int choice = app.scanner.nextInt();
+                                    if (choice == 1) {
+                                        isRepeat = true;
+                                        app.addItem();
+                                    } else if (choice == 2) {
+                                        isRepeat = false;
+                                    } else {
+                                        System.out.println("Please select either 1 or 2");
+                                        isRepeat = true;
 
-                                }
+                                    }
 
-                            } while (isRepeat);
-                            break;
-                        case 2:
-                            app.displayReceipt();
-                            app.makePayments();
-                            break;
-                        case 3:
-                            app.displayReceipt();
-                            break;
-                        case 4:
-                            showMenu = false;
-                            return;
-                        default:
-                            System.out.println("Please select from options above");
+                                } while (isRepeat);
+                                break;
+                            case 2:
+                                app.displayReceipt();
+                                app.makePayments();
+                                break;
+                            case 3:
+                                app.displayReceipt();
+                                break;
+                            case 4:
+                                showMenu = false;
+                                return;
+                            default:
+                                System.out.println("Please select from options above");
+                        }
+                    } catch (InputMismatchException e) {
+                        app.scanner.nextLine();
+                        System.out.println("Please use numeric values");
                     }
-                } catch (Exception e) {
-                    app.scanner.nextLine();
-                    System.out.println("Please use numeric values");
                 }
+            } else {
+                System.out.println("You have exceeded your maximum attempts!");
             }
-        } else {
-            System.out.println("You have exceeded your maximum attempts!");
+
+        } catch (InterruptedException e) {
+            System.out.println("Ooops! interrupted exception: "+e.getMessage());
         }
 
     }
