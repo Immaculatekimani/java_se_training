@@ -28,7 +28,7 @@ public class Pos {
         Operations opp = new Operations();
         boolean isLogin;
         try {
-            FileHandler fileHandler = new FileHandler("pos-log-file.txt");
+            FileHandler fileHandler = new FileHandler("pos-log-file.txt", true);
             CustomFormatter formatter = new CustomFormatter();
             fileHandler.setFormatter(formatter);
             LOGGER.addHandler(fileHandler);

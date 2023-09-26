@@ -12,3 +12,5 @@
 2023-09-26 16:13:28 | databaseConnection | INFO | Connected successfully!
 2023-09-26 16:13:31 | databaseConnection | INFO | Connected successfully!
 2023-09-26 16:13:40 | databaseConnection | INFO | Connected successfully!
+2023-09-26 16:21:29 | addItem | INFO | 1 item has been added 
+2023-09-26 16:22:04 | addItem | INFO | 1 item has been added 
