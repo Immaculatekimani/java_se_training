@@ -20,9 +20,9 @@ public class PosDatabase {
     int noOfItems = 0;
 
     public static void fileLogging() {
-        FileHandler fileHandler;
+
         try {
-            fileHandler = new FileHandler("pos-log-file.txt", true);
+            FileHandler fileHandler = new FileHandler("pos-log-file.txt", true);
             CustomFormatter formatter = new CustomFormatter();
             fileHandler.setFormatter(formatter);
             LOGGER.addHandler(fileHandler);
@@ -50,6 +50,7 @@ public class PosDatabase {
         String deleteItems = "DELETE FROM items;";
         statement.executeUpdate(deleteItems);
         noOfItems = 0;
+        LOGGER.info("Items cleared successfully");
 
     }
 
@@ -69,6 +70,7 @@ public class PosDatabase {
 
         System.out.print("Enter item unit code: ");
         String itemCode = scanner.next();
+        
         System.out.print("Enter item quantity: ");
         int itemQuantity = scanner.nextInt();
         System.out.print("Enter item price: ");
@@ -103,10 +105,12 @@ public class PosDatabase {
                 System.out.println();
                 System.out.println("THANK YOU FOR SHOPPING WITH US \n");
                 System.out.println("***************************************************************");
+                LOGGER.info("payment successful");
+
                 clearItems();
 
             } else {
-                System.out.println("Insufficient Funds!");
+                LOGGER.warning("Insufficient funds");
             }
 
         }

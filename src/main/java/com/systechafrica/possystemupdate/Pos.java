@@ -1,14 +1,11 @@
 package com.systechafrica.possystemupdate;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import com.systechafrica.commonoperations.Operations;
-import com.systechafrica.logging.CustomFormatter;
 
 public class Pos {
     private static final Logger LOGGER = Logger.getLogger(Pos.class.getName());
@@ -16,7 +13,6 @@ public class Pos {
     Scanner scanner = new Scanner(System.in);
     final int MAX_ITEMS = 100;
     Item[] items = new Item[MAX_ITEMS];
-   
 
     public static void main(String[] args) {
         Operations opp = new Operations();
@@ -25,6 +21,7 @@ public class Pos {
             isLogin = opp.login();
             PosDatabase db = new PosDatabase();
             Pos app = new Pos();
+            PosDatabase.fileLogging();
 
             if (isLogin) {
                 System.out.println("Welcome " + opp.userName.toUpperCase());
@@ -72,7 +69,7 @@ public class Pos {
                                 System.out.println("Please select from options above");
                         }
                     } catch (InputMismatchException e) {
-                        app.scanner.nextLine();
+                        db.scanner.nextLine();
                         System.out.println("Please use numeric values");
                     } catch (SQLException e) {
                         LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
@@ -86,7 +83,7 @@ public class Pos {
             System.out.println("Ooops! interrupted exception: " + e.getMessage());
         } catch (SecurityException e) {
             LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
-        } 
+        }
 
     }
 
@@ -106,5 +103,4 @@ public class Pos {
 
     }
 
-  
 }

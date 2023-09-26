@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 import com.systechafrica.logging.CustomFormatter;
 import com.systechafrica.possystemupdate.Item;
 
-public class PosDatabaseDemo {
-    private static final Logger LOGGER = Logger.getLogger(PosDatabaseDemo.class.getName());
+public class PreojectDatabaseDemo {
+    private static final Logger LOGGER = Logger.getLogger(PreojectDatabaseDemo.class.getName());
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         try {
-            PosDatabaseDemo posDatabase = new PosDatabaseDemo();
+            PreojectDatabaseDemo posDatabase = new PreojectDatabaseDemo();
 
             FileHandler fileHandler = new FileHandler("pos-log-file.txt");
             CustomFormatter formatter = new CustomFormatter();

@@ -17,7 +17,7 @@ public class CustomFormatter extends Formatter {
         String message = record.getMessage();
         Instant instant = record.getInstant();
         LocalDateTime now = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        return pattern.format(now) + " | " + method + " | " + level + " | " + message +"\n";
+        return pattern.format(now) + " | " + level + " | " + method + " | " + message +"\n";
     }
 
 }

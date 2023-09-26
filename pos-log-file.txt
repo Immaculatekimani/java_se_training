@@ -14,3 +14,22 @@
 2023-09-26 16:13:40 | databaseConnection | INFO | Connected successfully!
 2023-09-26 16:21:29 | addItem | INFO | 1 item has been added 
 2023-09-26 16:22:04 | addItem | INFO | 1 item has been added 
+2023-09-26 17:00:55 | addItem | INFO | 1 item has been added 
+2023-09-26 17:02:03 | addItem | INFO | 1 item has been added 
+2023-09-26 17:19:52 | INFO | addItem | 1 item has been added 
+2023-09-26 17:20:15 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:20:58 | INFO | addItem | 1 item has been added 
+2023-09-26 17:21:20 | INFO | addItem | 1 item has been added 
+2023-09-26 17:21:37 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:21:37 | INFO | makePayments | payment successful
+2023-09-26 17:22:47 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:24:07 | INFO | addItem | 1 item has been added 
+2023-09-26 17:26:48 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:27:15 | INFO | addItem | 1 item has been added 
+2023-09-26 17:27:30 | INFO | makePayments | payment successful
+2023-09-26 17:27:31 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:27:50 | INFO | addItem | 1 item has been added 
+2023-09-26 17:28:20 | INFO | addItem | 1 item has been added 
+2023-09-26 17:28:37 | INFO | makePayments | payment successful
+2023-09-26 17:28:37 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:28:48 | INFO | clearItems | Items cleared successfully
