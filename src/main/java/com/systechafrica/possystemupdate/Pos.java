@@ -1,11 +1,23 @@
 package com.systechafrica.possystemupdate;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import com.systechafrica.commonoperations.Operations;
+import com.systechafrica.logging.CustomFormatter;
 
 public class Pos {
+    private static final Logger LOGGER = Logger.getLogger(Pos.class.getName());
+
     Scanner scanner = new Scanner(System.in);
     final int MAX_ITEMS = 100;
     int noOfItems = 0;
@@ -16,6 +28,11 @@ public class Pos {
         Operations opp = new Operations();
         boolean isLogin;
         try {
+            FileHandler fileHandler = new FileHandler("pos-log-file.txt");
+            CustomFormatter formatter = new CustomFormatter();
+            fileHandler.setFormatter(formatter);
+            LOGGER.addHandler(fileHandler);
+
             isLogin = opp.login();
             Pos app = new Pos();
             if (isLogin) {
@@ -65,6 +82,8 @@ public class Pos {
                     } catch (InputMismatchException e) {
                         app.scanner.nextLine();
                         System.out.println("Please use numeric values");
+                    } catch (SQLException e) {
+                        LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
                     }
                 }
             } else {
@@ -72,7 +91,11 @@ public class Pos {
             }
 
         } catch (InterruptedException e) {
-            System.out.println("Ooops! interrupted exception: "+e.getMessage());
+            System.out.println("Ooops! interrupted exception: " + e.getMessage());
+        } catch (SecurityException e) {
+            LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
+        } catch (IOException e) {
+            LOGGER.info("Ooops! read/write permissions denied: " + e.getMessage());
         }
 
     }
@@ -93,7 +116,19 @@ public class Pos {
 
     }
 
-    public void addItem() {
+    public void addItem() throws SQLException {
+
+        Connection connection = databaseConnection();
+        // create the table
+        Statement statement = connection.createStatement();
+        String createItemsTable = "CREATE TABLE IF NOT EXISTS items (item_id INT AUTO_INCREMENT PRIMARY KEY,item_code VARCHAR(255) NOT NULL,item_quantity INT,item_price DOUBLE)  ENGINE=INNODB;";
+        int tableStatus = statement.executeUpdate(createItemsTable);
+        if (tableStatus != 0) {
+            LOGGER.info("table created and status is: " + tableStatus);
+
+        }
+
+        // insert items
 
         System.out.print("Enter item unit code: ");
         String itemCode = scanner.next();
@@ -102,10 +137,14 @@ public class Pos {
         System.out.print("Enter item price: ");
         double itemPrice = scanner.nextDouble();
 
-        Item newItem = new Item(itemCode, itemQuantity, itemPrice);
+        String insertItem = "insert into items (item_code,item_quantity,item_price)values(?,?,?);";
+        PreparedStatement preparedStatement = connection.prepareStatement(insertItem);
 
-        items[noOfItems] = newItem; // add the item to the array
-        noOfItems++;
+        preparedStatement.setString(1, itemCode);
+        preparedStatement.setInt(2, itemQuantity);
+        preparedStatement.setDouble(3, itemPrice);
+        int rowsAffected = preparedStatement.executeUpdate();
+        LOGGER.info(rowsAffected + " item has been added ");
 
     }
 
@@ -136,26 +175,61 @@ public class Pos {
 
     }
 
-    public void displayReceipt() {
-        if (noOfItems == 0) {
-            System.out.println("Sorry no items have been selected!");
-        } else {
-            System.out.println("Item code \t item quantity \t unit price \t Total Value");
-            totalAmount = 0;
-            for (int i = 0; i < noOfItems; i++) {
-                Item item = items[i];
-                double totalValue = item.getQuantity() * item.getPrice();
-                System.out.println(item.getItemCode() + "\t\t  " + item.getQuantity() + "\t\t  " + item.getPrice()
-                        + "\t\t  " + totalValue);
-                totalAmount += totalValue;
-            }
+    public void displayReceipt() throws SQLException {
 
-            System.out.println("***************************************************************");
-            System.out.print("Total: " + totalAmount);
-            System.out.println();
-            System.out.println("***************************************************************");
+        Connection connection = databaseConnection();
+        Statement statement = connection.createStatement();
+        totalAmount = 0;
+        System.out.println("Item code \t item quantity \t unit price \t Total Value");
 
+        // get items from database
+        String selectItems = "SELECT * FROM items;";
+        ResultSet results = statement.executeQuery(selectItems);
+        while (results.next()) {
+            int id = results.getInt("item_id");
+            String itemCode = results.getString("item_code");
+            int quantity = results.getInt("item_quantity");
+            double price = results.getDouble("item_price");
+            double totalValue = quantity * price;
+            System.out.println(itemCode + "\t\t  " + quantity + "\t\t  " + price + "\t\t  " + totalValue);
+            totalAmount += totalValue;
         }
+        System.out.println("***************************************************************");
+        System.out.print("Total: " + totalAmount);
+        System.out.println();
+        System.out.println("***************************************************************");
+
+        // if (noOfItems == 0) {
+        // System.out.println("Sorry no items have been selected!");
+        // } else {
+        // System.out.println("Item code \t item quantity \t unit price \t Total
+        // Value");
+        // totalAmount = 0;
+        // for (int i = 0; i < noOfItems; i++) {
+        // Item item = items[i];
+        // double totalValue = item.getQuantity() * item.getPrice();
+        // System.out.println(item.getItemCode() + "\t\t " + item.getQuantity() + "\t\t
+        // " + item.getPrice()
+        // + "\t\t " + totalValue);
+        // totalAmount += totalValue;
+        // }
+
+        // System.out.println("***************************************************************");
+        // System.out.print("Total: " + totalAmount);
+        // System.out.println();
+        // System.out.println("***************************************************************");
+
+        // }
+
+    }
+
+    // connect to the database
+    private Connection databaseConnection() throws SQLException {
+        String connectionUrl = "jdbc:mysql://localhost:3309/pos";
+        String user = "javase";
+        String password = "javase";
+        LOGGER.info("Connected successfully!");
+        return DriverManager.getConnection(connectionUrl, user, password);
 
     }
 

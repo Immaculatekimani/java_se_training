@@ -1,0 +1,7 @@
+2023-09-26 15:43:31 | databaseConnection | INFO | Connected successfully!
+2023-09-26 15:43:53 | databaseConnection | INFO | Connected successfully!
+2023-09-26 15:44:07 | addItem | INFO | 1 item has been added 
+2023-09-26 15:44:15 | databaseConnection | INFO | Connected successfully!
+2023-09-26 15:44:35 | databaseConnection | INFO | Connected successfully!
+2023-09-26 15:44:46 | addItem | INFO | 1 item has been added 
+2023-09-26 15:44:52 | databaseConnection | INFO | Connected successfully!
