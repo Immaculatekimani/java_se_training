@@ -1,14 +1,13 @@
-package com.systechafrica.possystemupdate;
+package com.systechafrica.librarysystem;
 
-import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.systechafrica.commonoperations.Operations;
 
-public class Pos {
-    private static final Logger LOGGER = Logger.getLogger(Pos.class.getName());
+public class Library {
+    private static final Logger LOGGER = Logger.getLogger(Library.class.getName());
 
     Scanner scanner = new Scanner(System.in);
 
@@ -17,9 +16,9 @@ public class Pos {
         boolean isLogin;
         try {
             isLogin = opp.login();
-            PosDatabase db = new PosDatabase();
-            Pos app = new Pos();
-            PosDatabase.fileLogging();
+            // !create db object
+            Library app = new Library();
+            // !do file logging
 
             if (isLogin) {
                 System.out.println("Welcome " + opp.userName.toUpperCase());
@@ -34,14 +33,14 @@ public class Pos {
                         switch (option) {
                             case 1:
                                 boolean isRepeat = false;
-                                db.addItem();
+                                // !borrow book
                                 do {
 
                                     System.out.println("Add another item? \n 1: Yes    \n 2: No");
                                     int choice = app.scanner.nextInt();
                                     if (choice == 1) {
                                         isRepeat = true;
-                                        db.addItem();
+                                        // !borrow book
                                     } else if (choice == 2) {
                                         isRepeat = false;
                                     } else {
@@ -53,34 +52,29 @@ public class Pos {
                                 } while (isRepeat);
                                 break;
                             case 2:
-                                db.displayReceipt();
-                                db.makePayments();
+                                // !view borrowed book
                                 break;
                             case 3:
-                                db.displayReceipt();
-                                break;
+                                // ! return book
                             case 4:
-                                db.clearItems();
+                                // !add book to library
+                            case 5:
                                 showMenu = false;
                                 return;
                             default:
                                 System.out.println("Please select from options above");
                         }
                     } catch (InputMismatchException e) {
-                        db.scanner.nextLine();
+                        // ! db.scanner.nextLine();
                         System.out.println("Please use numeric values");
-                    } catch (SQLException e) {
-                        LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
                     }
                 }
             } else {
                 System.out.println("You have exceeded your maximum attempts!");
             }
 
-        } catch (InterruptedException e) {
-            System.out.println("Ooops! interrupted exception: " + e.getMessage());
-        } catch (SecurityException e) {
-            LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
+        } catch (Exception e) {
+            // !impliment custom exceptions
         }
 
     }
@@ -92,13 +86,14 @@ public class Pos {
         System.out.println();
         System.out.println("***************************************************************");
         System.out.println();
-        System.out.println("1. ADD ITEM");
-        System.out.println("2. MAKE PAYMENT");
-        System.out.println("3. DISPLAY RECEIPT");
-        System.out.println("4. QUIT");
+        System.out.println("1. Borrow a book");
+        System.out.println("2. View borrowed books");
+        System.out.println("3. Return a book");
+        System.out.println("4. Add book to library");
+        System.out.println("5. Quit");
+
         System.out.println();
         System.out.println("Choose an option: ");
 
     }
-
 }
