@@ -16,5 +16,25 @@ services:
       - '3308'
     volumes:
       - my-db:/var/lib/mysql
+
+
+  pos:
+    image: mysql:latest
+    restart: always
+    container_name: pos
+    environment:
+      MYSQL_DATABASE: 'pos'
+      MYSQL_USER: 'javase'
+      MYSQL_PASSWORD: 'javase'
+      MYSQL_ROOT_PASSWORD: 'javase'
+    ports:
+      # HOST-PORT:CONTAINER-PORT
+      - '3309:3306'
+    expose:
+      - '3306'
+      - '3309'
+    volumes:
+      - pos-db:/var/lib/mysql
 volumes:
   my-db:
+  pos-db:
