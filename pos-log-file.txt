@@ -33,3 +33,7 @@
 2023-09-26 17:28:37 | INFO | makePayments | payment successful
 2023-09-26 17:28:37 | INFO | clearItems | Items cleared successfully
 2023-09-26 17:28:48 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:32:49 | INFO | addItem | 1 item has been added 
+2023-09-26 17:33:09 | INFO | makePayments | payment successful
+2023-09-26 17:33:09 | INFO | clearItems | Items cleared successfully
+2023-09-26 17:33:29 | INFO | clearItems | Items cleared successfully

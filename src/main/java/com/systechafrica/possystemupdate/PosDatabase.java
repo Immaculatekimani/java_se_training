@@ -70,7 +70,6 @@ public class PosDatabase {
 
         System.out.print("Enter item unit code: ");
         String itemCode = scanner.next();
-        
         System.out.print("Enter item quantity: ");
         int itemQuantity = scanner.nextInt();
         System.out.print("Enter item price: ");
@@ -106,7 +105,6 @@ public class PosDatabase {
                 System.out.println("THANK YOU FOR SHOPPING WITH US \n");
                 System.out.println("***************************************************************");
                 LOGGER.info("payment successful");
-
                 clearItems();
 
             } else {
