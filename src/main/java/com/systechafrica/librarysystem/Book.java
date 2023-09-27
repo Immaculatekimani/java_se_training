@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
-import com.systechafrica.logging.LibraryLogging;
-
 public class Book {
     private int bookId;
     private String bookTitle;
@@ -80,7 +78,7 @@ public class Book {
         preparedStatement.setString(2, author);
         preparedStatement.setBoolean(3, isAvailable);
         int rowsAffected = preparedStatement.executeUpdate();
-        LOGGER.info(rowsAffected + " book has been added ");
+        
 
     }
 }

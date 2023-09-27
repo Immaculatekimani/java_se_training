@@ -11,7 +11,7 @@ import com.systechafrica.commonoperations.Operations;
 import com.systechafrica.logging.LibraryLogging;
 
 public class Library {
-    private static final Logger LOGGER = Logger.getLogger(Library.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LibraryLogging.class.getName());
 
     Scanner scanner = new Scanner(System.in);
 
@@ -39,25 +39,7 @@ public class Library {
 
                         switch (option) {
                             case 1:
-                                // boolean isRepeat = false;
-                                // // !borrow book
-                                // do {
-
-                                //     System.out.println("Add another item? \n 1: Yes    \n 2: No");
-                                //     int choice = app.scanner.nextInt();
-                                //     if (choice == 1) {
-                                //         isRepeat = true;
-                                //         // !borrow book
-                                //     } else if (choice == 2) {
-                                //         isRepeat = false;
-                                //     } else {
-                                //         System.out.println("Please select either 1 or 2");
-                                //         isRepeat = true;
-
-                                //     }
-
-                                // } while (isRepeat);
-                                // break;
+                                //! borrow book
                             case 2:
                                 // !view borrowed book
                                 break;
@@ -141,6 +123,6 @@ public class Library {
         Book book = new Book(title, author, true);
         book.insertBook(connection);
 
-        System.out.println("Book added successfully.");
+        LOGGER.info(" book has been added to database successfully ");
     }
 }

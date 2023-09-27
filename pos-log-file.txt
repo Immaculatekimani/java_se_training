@@ -37,3 +37,11 @@
 2023-09-26 17:33:09 | INFO | makePayments | payment successful
 2023-09-26 17:33:09 | INFO | clearItems | Items cleared successfully
 2023-09-26 17:33:29 | INFO | clearItems | Items cleared successfully
+2023-09-27 19:03:34 | SEVERE | main | Something wrong with your database operation: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-09-27 19:03:41 | SEVERE | main | Something wrong with your database operation: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-09-27 19:06:30 | INFO | addItem | 1 item has been added 
+2023-09-27 19:06:56 | INFO | clearItems | Items cleared successfully
