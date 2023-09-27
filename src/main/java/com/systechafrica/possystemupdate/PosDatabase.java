@@ -61,7 +61,7 @@ public class PosDatabase {
         Statement statement = connection.createStatement();
         String createItemsTable = "CREATE TABLE IF NOT EXISTS items (item_id INT AUTO_INCREMENT PRIMARY KEY,item_code VARCHAR(255) NOT NULL,item_quantity INT,item_price DOUBLE)  ENGINE=INNODB;";
         int tableStatus = statement.executeUpdate(createItemsTable);
-        if (tableStatus != 0) {
+        if (tableStatus == 0) {
             LOGGER.info("table created and status is: " + tableStatus);
 
         }
@@ -139,6 +139,23 @@ public class PosDatabase {
             System.out.print("Total: " + totalAmount);
             System.out.println();
             System.out.println("***************************************************************");
+        }
+
+    }
+
+    public void createUsersTable() throws SQLException {
+        Connection connection = databaseConnection();
+        Statement statement = connection.createStatement();
+        String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255),user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
+        int tableStatus = statement.executeUpdate(createTable);
+        if (tableStatus == 0) {
+            
+            // insert a default user
+
+            String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
+            int rowsAffected = preparedStatement.executeUpdate();
+            LOGGER.info("Default user Admin has been added");
         }
 
     }

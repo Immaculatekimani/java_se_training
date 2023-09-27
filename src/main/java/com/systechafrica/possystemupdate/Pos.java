@@ -8,18 +8,22 @@ import java.util.logging.Logger;
 import com.systechafrica.commonoperations.Operations;
 
 public class Pos {
-    private static final Logger LOGGER = Logger.getLogger(Pos.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PosDatabase.class.getName()); // to get the file handler and
+                                                                                        // customization
 
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Operations opp = new Operations();
+        PosDatabase db = new PosDatabase();
+
         boolean isLogin;
+        PosDatabase.fileLogging();
+
         try {
+            db.createUsersTable();
             isLogin = opp.login();
-            PosDatabase db = new PosDatabase();
             Pos app = new Pos();
-            PosDatabase.fileLogging();
 
             if (isLogin) {
                 System.out.println("Welcome " + opp.userName.toUpperCase());
@@ -81,6 +85,8 @@ public class Pos {
             System.out.println("Ooops! interrupted exception: " + e.getMessage());
         } catch (SecurityException e) {
             LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
+        } catch (SQLException e1) {
+            LOGGER.severe("Sorry, unable to create users table: " + e1.getMessage());
         }
 
     }
