@@ -21,8 +21,8 @@ public class Pos {
 
         try {
             db.createUsersTable();
-            isLogin = db.authenticateDatabaseUser();
             Pos app = new Pos();
+            isLogin = app.isAuthenticated();
 
             if (isLogin) {
                 System.out.println("Welcome  ");
@@ -88,8 +88,8 @@ public class Pos {
             LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
         } catch (SQLException e1) {
             LOGGER.severe("Sorry, database operation failed: " + e1.getMessage());
-        } catch (NullPointerException e){
-            LOGGER.severe("You are referring to a non existing value: "+e.getMessage());
+        } catch (NullPointerException e) {
+            LOGGER.severe("You are referring to a non existing value: " + e.getMessage());
         }
 
     }
@@ -108,6 +108,22 @@ public class Pos {
         System.out.println();
         System.out.println("Choose an option: ");
 
+    }
+
+    public boolean isAuthenticated() throws SQLException, InterruptedException {
+        PosDatabase posDatabase = new PosDatabase();
+        System.out.println("Choose an option below: \n1: Register \n 2: Login");
+        int progamEntry = scanner.nextInt();
+        switch (progamEntry) {
+            case 1:
+                return posDatabase.registerUser();
+            case 2:
+                return posDatabase.authenticateDatabaseUser();
+            default:
+                System.out.println("Please select only the above");
+                return false;
+
+        }
     }
 
 }

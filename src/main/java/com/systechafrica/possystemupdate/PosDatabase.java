@@ -160,7 +160,7 @@ public class PosDatabase {
 
             String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
             PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
-            int rowsAffected = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             LOGGER.info("Default user Admin has been added");
         }
 
@@ -229,5 +229,30 @@ public class PosDatabase {
     }
 
     // register user
+    public boolean registerUser() throws SQLException, InterruptedException {
+        Connection connection = databaseConnection();
+
+        System.out.println("Please enter your username;");
+        String userName = scanner.nextLine();
+        System.out.println("Please enter your password");
+        String password = scanner.nextLine();
+
+        String createUser = "insert into users(user_name, user_password)values(?,?);";
+        PreparedStatement preparedStatement = connection.prepareStatement(createUser);
+        preparedStatement.setString(1, userName);
+        preparedStatement.setString(2, password);
+        preparedStatement.executeUpdate();
+
+        User addedUser = getUser(userName);
+        if (addedUser != null) {
+            System.out.println("You have been added successfully and are being redirected to login");
+            Thread.sleep(1500);
+            return authenticateDatabaseUser();
+        } else {
+            System.out.println("Sorry your data does not exist please try again later");
+            return false;
+        }
+
+    }
 
 }

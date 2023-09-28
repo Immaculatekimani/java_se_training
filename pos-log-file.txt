@@ -72,3 +72,12 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-09-28 20:40:02 | INFO | addItem | table created and status is: 0
 2023-09-28 20:40:46 | INFO | addItem | table created and status is: 0
 2023-09-28 20:41:02 | INFO | clearItems | Items cleared successfully
+2023-09-28 21:33:31 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:34:06 | INFO | addItem | table created and status is: 0
+2023-09-28 21:34:13 | INFO | addItem | 1 item has been added 
+2023-09-28 21:34:30 | INFO | clearItems | Items cleared successfully
+2023-09-28 21:34:43 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:35:01 | INFO | clearItems | Items cleared successfully
+2023-09-28 21:36:16 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:36:36 | INFO | clearItems | Items cleared successfully
+2023-09-28 21:36:45 | INFO | createUsersTable | Users table has been created, status: 0
