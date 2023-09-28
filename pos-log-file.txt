@@ -81,3 +81,34 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-09-28 21:36:16 | INFO | createUsersTable | Users table has been created, status: 0
 2023-09-28 21:36:36 | INFO | clearItems | Items cleared successfully
 2023-09-28 21:36:45 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:45:49 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:46:40 | SEVERE | getUser | user not found
+2023-09-28 21:47:17 | INFO | clearItems | Items cleared successfully
+2023-09-28 21:51:37 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 21:51:54 | SEVERE | getUser | user not found
+2023-09-28 21:59:30 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:02:42 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:04:55 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:04:55 | INFO | createUsersTable | Default user Admin has been added
+2023-09-28 22:07:09 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:07:57 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:08:59 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:08:59 | INFO | createUsersTable | Default user Admin has been added
+2023-09-28 22:09:31 | INFO | clearItems | Items cleared successfully
+2023-09-28 22:09:41 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:16:36 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:19:14 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:21:36 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:29:19 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:31:39 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:31:39 | INFO | createUsersTable | Default user Admin has been added
+2023-09-28 22:32:03 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:32:43 | INFO | clearItems | Items cleared successfully
+2023-09-28 22:33:50 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:37:06 | INFO | clearItems | Items cleared successfully
+2023-09-28 22:37:27 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:37:28 | INFO | createUsersTable | Default user Admin has been added
+2023-09-28 22:37:59 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:38:17 | INFO | clearItems | Items cleared successfully
+2023-09-28 22:38:30 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 22:39:06 | INFO | clearItems | Items cleared successfully

@@ -147,7 +147,7 @@ public class PosDatabase {
         }
 
     }
-    // working with users
+    // WORKING WITH USERS
 
     public void createUsersTable() throws SQLException {
         Connection connection = databaseConnection();
@@ -155,8 +155,9 @@ public class PosDatabase {
         String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255) UNIQUE,user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
         int tableStatus = statement.executeUpdate(createTable);
         LOGGER.info("Users table has been created, status: " + tableStatus);
+        boolean defaultUserExists = checkDefaultUserExists(connection);
 
-        if (!checkDefaultUserExists()) {
+        if (!defaultUserExists) {
 
             String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
             PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
@@ -166,20 +167,14 @@ public class PosDatabase {
 
     }
 
-    public boolean checkDefaultUserExists() throws SQLException {
-        Connection connection = databaseConnection();
+    public boolean checkDefaultUserExists(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-
         String adminUser = "select count(*) from users where user_name = 'Admin';";
         ResultSet results = statement.executeQuery(adminUser);
-        if (results.next()) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return results.next() && results.getInt(1) > 0; // checks if the first column of count row is one
     }
 
+    // find user
     public User getUser(String username) throws SQLException {
         Connection connection = databaseConnection();
         String findUser = "SELECT * from users WHERE user_name = ?;";
@@ -200,7 +195,7 @@ public class PosDatabase {
 
     }
 
-    // authenticate the found user
+    // authenticate user
     public boolean authenticateDatabaseUser() throws SQLException, InterruptedException {
         int trials = 0;
         boolean loggedIn = false;

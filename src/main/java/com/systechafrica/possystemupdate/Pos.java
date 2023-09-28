@@ -112,7 +112,7 @@ public class Pos {
 
     public boolean isAuthenticated() throws SQLException, InterruptedException {
         PosDatabase posDatabase = new PosDatabase();
-        System.out.println("Choose an option below: \n1: Register \n 2: Login");
+        System.out.println("Choose an option below: \n1: Register \n2: Login");
         int progamEntry = scanner.nextInt();
         switch (progamEntry) {
             case 1:
