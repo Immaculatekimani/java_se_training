@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import com.systechafrica.commonoperations.Operations;
+import com.systechafrica.exceptionhandling.CustomException;
 
 public class Pos {
     private static final Logger LOGGER = Logger.getLogger(PosDatabase.class.getName()); // to get the file handler and
@@ -14,7 +14,6 @@ public class Pos {
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Operations opp = new Operations();
         PosDatabase db = new PosDatabase();
 
         boolean isLogin;
@@ -26,7 +25,7 @@ public class Pos {
             Pos app = new Pos();
 
             if (isLogin) {
-                System.out.println("Welcome ");//!catch nullpointer exception
+                System.out.println("Welcome  ");
                 boolean showMenu = true;
                 while (showMenu) {
                     app.mainMenu();
@@ -75,6 +74,8 @@ public class Pos {
                         System.out.println("Please use numeric values");
                     } catch (SQLException e) {
                         LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
+                    } catch (CustomException e) {
+                        LOGGER.severe(e.getMessage());
                     }
                 }
             } else {
@@ -87,6 +88,8 @@ public class Pos {
             LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
         } catch (SQLException e1) {
             LOGGER.severe("Sorry, database operation failed: " + e1.getMessage());
+        } catch (NullPointerException e){
+            LOGGER.severe("You are referring to a non existing value: "+e.getMessage());
         }
 
     }

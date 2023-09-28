@@ -11,6 +11,8 @@ import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import com.systechafrica.commonoperations.Operations;
+import com.systechafrica.exceptionhandling.CustomException;
 import com.systechafrica.logging.CustomFormatter;
 
 public class PosDatabase {
@@ -18,6 +20,7 @@ public class PosDatabase {
     Scanner scanner = new Scanner(System.in);
     double totalAmount = 0.0;
     int noOfItems = 0;
+    Operations opp = new Operations();
 
     public static void fileLogging() {
 
@@ -54,7 +57,7 @@ public class PosDatabase {
 
     }
 
-    public void addItem() throws SQLException {
+    public void addItem() throws SQLException, CustomException {
 
         Connection connection = databaseConnection();
         // create the table
@@ -74,6 +77,8 @@ public class PosDatabase {
         int itemQuantity = scanner.nextInt();
         System.out.print("Enter item price: ");
         double itemPrice = scanner.nextDouble();
+
+        opp.checkIfNegative(itemPrice, itemQuantity);
 
         String insertItem = "insert into items (item_code,item_quantity,item_price)values(?,?,?);";
         PreparedStatement preparedStatement = connection.prepareStatement(insertItem);
@@ -149,6 +154,8 @@ public class PosDatabase {
         Statement statement = connection.createStatement();
         String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255) UNIQUE,user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
         int tableStatus = statement.executeUpdate(createTable);
+        LOGGER.info("Users table has been created, status: " + tableStatus);
+
         if (!checkDefaultUserExists()) {
 
             String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
@@ -165,9 +172,9 @@ public class PosDatabase {
 
         String adminUser = "select count(*) from users where user_name = 'Admin';";
         ResultSet results = statement.executeQuery(adminUser);
-        if(results.next()){
+        if (results.next()) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -220,5 +227,7 @@ public class PosDatabase {
         return loggedIn;
 
     }
+
+    // register user
 
 }

@@ -56,3 +56,19 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-09-28 06:29:34 | INFO | makePayments | payment successful
 2023-09-28 06:29:34 | INFO | clearItems | Items cleared successfully
 2023-09-28 06:29:51 | INFO | clearItems | Items cleared successfully
+2023-09-28 13:40:58 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 13:41:08 | SEVERE | getUser | user not found
+2023-09-28 13:41:25 | INFO | addItem | table created and status is: 0
+2023-09-28 13:41:35 | INFO | addItem | 1 item has been added 
+2023-09-28 13:41:52 | INFO | clearItems | Items cleared successfully
+2023-09-28 13:48:38 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 13:48:53 | INFO | addItem | table created and status is: 0
+2023-09-28 13:49:17 | INFO | clearItems | Items cleared successfully
+2023-09-28 13:52:17 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 13:52:29 | INFO | addItem | table created and status is: 0
+2023-09-28 13:53:25 | INFO | clearItems | Items cleared successfully
+2023-09-28 13:53:33 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 20:39:45 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-28 20:40:02 | INFO | addItem | table created and status is: 0
+2023-09-28 20:40:46 | INFO | addItem | table created and status is: 0
+2023-09-28 20:41:02 | INFO | clearItems | Items cleared successfully
