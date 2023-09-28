@@ -5,6 +5,20 @@ public class User {
     private String username;
     private String password;
 
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }
@@ -29,6 +43,8 @@ public class User {
         this.password = password;
     }
 
-    
+    public boolean authentication(String inputPassword) {
+        return this.password.equals(inputPassword);
+    }
 
 }

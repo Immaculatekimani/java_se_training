@@ -142,21 +142,82 @@ public class PosDatabase {
         }
 
     }
+    // working with users
 
     public void createUsersTable() throws SQLException {
         Connection connection = databaseConnection();
         Statement statement = connection.createStatement();
-        String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255),user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
+        String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255) UNIQUE,user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
         int tableStatus = statement.executeUpdate(createTable);
-        if (tableStatus == 0) {
-            
-            // insert a default user
+        if (!checkDefaultUserExists()) {
 
             String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
             PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
             int rowsAffected = preparedStatement.executeUpdate();
             LOGGER.info("Default user Admin has been added");
         }
+
+    }
+
+    public boolean checkDefaultUserExists() throws SQLException {
+        Connection connection = databaseConnection();
+        Statement statement = connection.createStatement();
+
+        String adminUser = "select count(*) from users where user_name = 'Admin';";
+        ResultSet results = statement.executeQuery(adminUser);
+        if(results.next()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public User getUser(String username) throws SQLException {
+        Connection connection = databaseConnection();
+        String findUser = "SELECT * from users WHERE user_name = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(findUser);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt("user_id");
+            String userName = resultSet.getString("user_name");
+            String userPassword = resultSet.getString("user_password");
+
+            User foundUser = new User(id, userName, userPassword);
+            return foundUser;
+        }
+        LOGGER.severe("user not found");
+        return null;
+
+    }
+
+    // authenticate the found user
+    public boolean authenticateDatabaseUser() throws SQLException, InterruptedException {
+        int trials = 0;
+        boolean loggedIn = false;
+        while (trials < 3) {
+            System.out.print("Please enter your username: ");
+            String userName = scanner.nextLine();
+            System.out.print("Please enter your password: ");
+            String userPassword = scanner.nextLine();
+            System.out.println("Loading...");
+            Thread.sleep(1500);
+
+            User userToCheck = getUser(userName);
+
+            if (userToCheck != null) {
+                if (userToCheck.authentication(userPassword) == true) {
+                    loggedIn = true;
+                    break;
+                }
+            }
+            System.out.println("Wrong user name or password please try again");
+            trials++;
+
+        }
+        return loggedIn;
 
     }
 

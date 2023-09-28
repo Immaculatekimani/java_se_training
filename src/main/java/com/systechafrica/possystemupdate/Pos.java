@@ -22,11 +22,11 @@ public class Pos {
 
         try {
             db.createUsersTable();
-            isLogin = opp.login();
+            isLogin = db.authenticateDatabaseUser();
             Pos app = new Pos();
 
             if (isLogin) {
-                System.out.println("Welcome " + opp.userName.toUpperCase());
+                System.out.println("Welcome ");//!catch nullpointer exception
                 boolean showMenu = true;
                 while (showMenu) {
                     app.mainMenu();
@@ -86,7 +86,7 @@ public class Pos {
         } catch (SecurityException e) {
             LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
         } catch (SQLException e1) {
-            LOGGER.severe("Sorry, unable to create users table: " + e1.getMessage());
+            LOGGER.severe("Sorry, database operation failed: " + e1.getMessage());
         }
 
     }

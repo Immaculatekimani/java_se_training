@@ -49,3 +49,10 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-09-27 20:28:51 | INFO | clearItems | Items cleared successfully
 2023-09-27 20:32:27 | INFO | createUsersTable | Default user Admin has been added
 2023-09-27 20:32:56 | INFO | clearItems | Items cleared successfully
+2023-09-27 21:24:08 | INFO | createUsersTable | Default user Admin has been added
+2023-09-27 21:51:53 | INFO | createUsersTable | Default user Admin has been added
+2023-09-28 06:29:02 | INFO | addItem | table created and status is: 0
+2023-09-28 06:29:13 | INFO | addItem | 1 item has been added 
+2023-09-28 06:29:34 | INFO | makePayments | payment successful
+2023-09-28 06:29:34 | INFO | clearItems | Items cleared successfully
+2023-09-28 06:29:51 | INFO | clearItems | Items cleared successfully
