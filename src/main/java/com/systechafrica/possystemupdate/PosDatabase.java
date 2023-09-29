@@ -14,29 +14,39 @@ public class PosDatabase {
     Scanner scanner = new Scanner(System.in);
 
     // connect to the database
-    public Connection databaseConnection() throws SQLException {
-        String connectionUrl = "jdbc:mysql://localhost:3309/pos";
-        String user = "javase";
-        String password = "javase";
-        return DriverManager.getConnection(connectionUrl, user, password);
+    public Connection databaseConnection() {
+        try {
+            String connectionUrl = "jdbc:mysql://localhost:3309/pos";
+            String user = "javase";
+            String password = "javase";
+            return DriverManager.getConnection(connectionUrl, user, password);
+        } catch (SQLException e) {
+            LOGGER.severe("Connection failed: "+e.getMessage());
+            return null;
+        }
 
     }
 
     // WORKING WITH USERS
 
-    public void createUsersTable(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255) UNIQUE,user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
-        int tableStatus = statement.executeUpdate(createTable);
-        LOGGER.info("Users table has been created, status: " + tableStatus);
-        boolean defaultUserExists = checkDefaultUserExists(connection);
+    public void createUsersTable(Connection connection)  {
+        try {
+            Statement statement = connection.createStatement();
+            
+            String createTable = "CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,user_name VARCHAR(255) UNIQUE,user_password VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
+            int tableStatus = statement.executeUpdate(createTable);
+            LOGGER.info("Users table has been created, status: " + tableStatus);
+            boolean defaultUserExists = checkDefaultUserExists(connection);
 
-        if (!defaultUserExists) {
+            if (!defaultUserExists) {
 
-            String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
-            preparedStatement.executeUpdate();
-            LOGGER.info("Default user Admin has been added");
+                String insertUser = "INSERT INTO users(user_name,user_password)values('Admin', 'Admin123');";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
+                preparedStatement.executeUpdate();
+                LOGGER.info("Default user Admin has been added");
+            }
+        } catch (SQLException e) {
+            LOGGER.severe("Unable to create users table: "+e.getMessage());
         }
 
     }

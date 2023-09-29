@@ -30,82 +30,78 @@ public class Pos {
 
         boolean isLogin;
 
-        try {
-            PosDatabase db = new PosDatabase();
-            Pos app = new Pos();
+        PosDatabase db = new PosDatabase();
+        Pos app = new Pos();
 
-            Connection connection = db.databaseConnection();
-            db.createUsersTable(connection);
+        Connection connection = db.databaseConnection();
+        db.createUsersTable(connection);
 
-            isLogin = app.isAuthenticated(connection);
+        isLogin = app.isAuthenticated(connection);
 
-            if (isLogin) {
-                System.out.println("Welcome  ");
-                boolean showMenu = true;
-                while (showMenu) {
-                    app.mainMenu();
-                    try {
-                        int option = app.scanner.nextInt();
-                        System.out.println("LOADING...");
-                        Thread.sleep(1500);
+        if (isLogin) {
+            System.out.println("Welcome  ");
+            boolean showMenu = true;
+            while (showMenu) {
+                app.mainMenu();
+                try {
+                    int option = app.scanner.nextInt();
+                    System.out.println("LOADING...");
+                    Thread.sleep(1500);
 
-                        switch (option) {
-                            case 1:
-                                boolean isRepeat = false;
-                                app.addItem(connection);
-                                do {
+                    switch (option) {
+                        case 1:
+                            boolean isRepeat = false;
+                            app.addItem(connection);
+                            do {
 
-                                    System.out.println("Add another item? \n 1: Yes    \n 2: No");
-                                    int choice = app.scanner.nextInt();
-                                    if (choice == 1) {
-                                        isRepeat = true;
-                                        app.addItem(connection);
-                                    } else if (choice == 2) {
-                                        isRepeat = false;
-                                    } else {
-                                        System.out.println("Please select either 1 or 2");
-                                        isRepeat = true;
+                                System.out.println("Add another item? \n 1: Yes    \n 2: No");
+                                int choice = app.scanner.nextInt();
+                                if (choice == 1) {
+                                    isRepeat = true;
+                                    app.addItem(connection);
+                                } else if (choice == 2) {
+                                    isRepeat = false;
+                                } else {
+                                    System.out.println("Please select either 1 or 2");
+                                    isRepeat = true;
 
-                                    }
+                                }
 
-                                } while (isRepeat);
-                                break;
-                            case 2:
-                                app.displayReceipt(connection);
-                                app.makePayments(connection);
-                                break;
-                            case 3:
-                                app.displayReceipt(connection);
-                                break;
-                            case 4:
-                                app.clearItems(connection);
-                                db.closeResources(connection);
-                                showMenu = false;
-                                return;
-                            default:
-                                System.out.println("Please select from options above");
-                        }
-                    } catch (InputMismatchException e) {
-                        db.scanner.nextLine();
-                        System.out.println("Please use numeric values");
-                    } catch (SQLException e) {
-                        LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
-                    } catch (CustomException e) {
-                        LOGGER.severe(e.getMessage());
+                            } while (isRepeat);
+                            break;
+                        case 2:
+                            app.displayReceipt(connection);
+                            app.makePayments(connection);
+                            break;
+                        case 3:
+                            app.displayReceipt(connection);
+                            break;
+                        case 4:
+                            app.clearItems(connection);
+                            db.closeResources(connection);
+                            showMenu = false;
+                            return;
+                        default:
+                            System.out.println("Please select only from options above");
                     }
-                }
-            } else {
-                System.out.println("You have exceeded your maximum attempts!");
-            }
+                } catch (InputMismatchException e) {
+                    app.scanner.nextLine();
+                    System.out.println("Please use numeric values");
+                } catch (SQLException e) {
+                    LOGGER.severe("Something wrong with your database operation: " + e.getMessage());
+                } catch (CustomException e) {
+                    LOGGER.severe(e.getMessage());
+                } catch (InterruptedException e) {
+                    System.out.println("Ooops! interrupted exception: " + e.getMessage());
+                } catch (SecurityException e) {
+                    LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
 
-        } catch (InterruptedException e) {
-            System.out.println("Ooops! interrupted exception: " + e.getMessage());
-        } catch (SecurityException e) {
-            LOGGER.severe("Unable to obtain security permissions for the log file: " + e.getMessage());
-        } catch (SQLException e1) {
-            LOGGER.severe("Sorry, database operation failed: " + e1.getMessage());
-        } catch (NullPointerException e) {
-            LOGGER.severe("You are referring to a non existing value: " + e.getMessage());
+                } catch (NullPointerException e) {
+                    LOGGER.severe("You are referring to a non existing value: " + e.getMessage());
+                }
+            }
+        } else {
+            System.out.println("You have exceeded your maximum attempts!");
         }
 
     }
@@ -113,7 +109,8 @@ public class Pos {
     public static void fileLogging() {
 
         try {
-            FileHandler fileHandler = new FileHandler("pos-log-file.txt", true);
+            FileHandler fileHandler = new FileHandler("pos-log-file.txt", true); // true, allows append mode for the log
+                                                                                 // file
             CustomFormatter formatter = new CustomFormatter();
             fileHandler.setFormatter(formatter);
             LOGGER.addHandler(fileHandler);
@@ -141,19 +138,30 @@ public class Pos {
 
     }
 
-    public boolean isAuthenticated(Connection connection) throws SQLException, InterruptedException {
-        PosDatabase posDatabase = new PosDatabase();
-        System.out.println("Choose an option below: \n1: Register \n2: Login");
-        int programEntry = scanner.nextInt();
-        switch (programEntry) {
-            case 1:
-                return posDatabase.registerUser(connection);
-            case 2:
-                return posDatabase.authenticateDatabaseUser(connection);
-            default:
-                System.out.println("Please select only the above");
-                return false;
+    public boolean isAuthenticated(Connection connection) {
+        try {
+            PosDatabase posDatabase = new PosDatabase();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("                       SYSTECH POS SYSTEM                      ");
+            System.out.println();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("Choose an option below: \n1: Register \n2: Login");
+            int programEntry = scanner.nextInt();
+            switch (programEntry) {
+                case 1:
+                    return posDatabase.registerUser(connection);
+                case 2:
+                    return posDatabase.authenticateDatabaseUser(connection);
+                default:
+                    System.out.println("Please select only the above");
+                    return false;
 
+            }
+        } catch (SQLException | InterruptedException e) {
+            LOGGER.severe("Unable to authenticate the user: " + e.getMessage());
+            return false;
         }
     }
 
@@ -192,8 +200,6 @@ public class Pos {
     }
 
     public void makePayments(Connection connection) throws SQLException, CustomException {
-        PosDatabase db = new PosDatabase();
-
         if (noOfItems == 0) {
             System.out.println("Please select an item then make payment.");
         } else {

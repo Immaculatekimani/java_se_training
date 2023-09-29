@@ -140,3 +140,20 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-09-29 10:18:23 | INFO | createUsersTable | Default user Admin has been added
 2023-09-29 10:18:46 | INFO | clearItems | Items cleared successfully
 2023-09-29 10:18:46 | INFO | closeResources | Resources cleared successfully!
+2023-09-29 10:24:22 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-29 10:25:00 | INFO | addItem | table created and status is: 0
+2023-09-29 10:25:09 | SEVERE | main | Sorry we only need positive values
+2023-09-29 10:25:32 | INFO | addItem | table created and status is: 0
+2023-09-29 10:25:41 | INFO | addItem | 1 item has been added 
+2023-09-29 10:25:43 | INFO | addItem | table created and status is: 0
+2023-09-29 10:25:50 | INFO | addItem | 1 item has been added 
+2023-09-29 10:26:15 | INFO | makePayments | payment successful
+2023-09-29 10:26:15 | INFO | clearItems | Items cleared successfully
+2023-09-29 10:26:33 | INFO | clearItems | Items cleared successfully
+2023-09-29 10:26:33 | INFO | closeResources | Resources cleared successfully!
+2023-09-29 10:50:44 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-29 10:53:08 | INFO | createUsersTable | Users table has been created, status: 0
+2023-09-29 10:53:22 | INFO | addItem | table created and status is: 0
+2023-09-29 10:53:29 | SEVERE | main | Sorry we only need positive values
+2023-09-29 10:53:48 | INFO | clearItems | Items cleared successfully
+2023-09-29 10:53:48 | INFO | closeResources | Resources cleared successfully!
