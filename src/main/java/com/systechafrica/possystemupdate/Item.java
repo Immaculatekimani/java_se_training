@@ -12,14 +12,15 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
     }
-    
-    public Item(String itemCode, int quantity, double price){
+
+    public Item(String itemCode, int quantity, double price) {
         this.itemCode = itemCode;
         this.quantity = quantity;
         this.price = price;
     }
-    public Item(){
-        
+
+    public Item() {
+
     }
 
     public String getItemCode() {
@@ -45,6 +46,5 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-    
-    
+
 }
