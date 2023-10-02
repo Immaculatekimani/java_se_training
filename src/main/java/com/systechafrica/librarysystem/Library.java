@@ -60,8 +60,19 @@ public class Library {
                             } while (isBorrow);
                             break;
                         case 2:
-                            // !view borrowed book
-                            app.viewBorrowedBooks(connection);
+                            // ! books borrowed by a specific student
+                            System.out.println(
+                                    "Select one: \n 1: All Books Borrowed    \n 2: Books Borrowed by a student");
+                            int selection = app.scanner.nextInt();
+                            app.scanner.nextLine();
+                            if (selection == 1) {
+                                app.viewBorrowedBooks(connection);
+                            } else if (selection == 2) {
+                                app.viewBooksBorrowedByStudent(connection);
+                            } else {
+                                System.out.println("Please select either 1 or 2");
+                            }
+
                             break;
                         case 3:
                             // ! return book
@@ -191,5 +202,25 @@ public class Library {
 
             System.out.println(bk.getStudentNumber() + "\t\t\t\t\t" + bk.getIsbn() + "\t\t\t" + book.getBookTitle());
         }
+    }
+
+    public void viewBooksBorrowedByStudent(Connection connection) throws SQLException {
+        System.out.print("Enter Student Registration Number");
+        int registrationNumber = scanner.nextInt();
+        BorrowedBook[] borrowedBooks = BorrowedBook.getBooksBorrowedByStudent(connection, registrationNumber);
+
+        if (borrowedBooks.length > 0) {
+            System.out.println("Books Borrowed");
+            System.out.println("Student Registration Number\t\tBook ISBN\t\tBook Title\t\t");
+            for (BorrowedBook bk : borrowedBooks) {
+                Book book = Book.findBook(connection, bk.getIsbn());
+
+                System.out
+                        .println(bk.getStudentNumber() + "\t\t\t\t\t" + bk.getIsbn() + "\t\t\t" + book.getBookTitle());
+            }
+        } else {
+            LOGGER.info("No books borrowed by that student.");
+        }
+
     }
 }

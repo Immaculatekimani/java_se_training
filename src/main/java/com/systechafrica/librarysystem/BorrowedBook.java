@@ -82,4 +82,24 @@ public class BorrowedBook {
         return borrowedBooks.toArray(new BorrowedBook[0]);
     }
 
+    public static BorrowedBook[] getBooksBorrowedByStudent(Connection connection, int registrationNumber) throws SQLException {
+        String getBorrowedBooks = "SELECT bb.* FROM borrowed_books bb "+"JOIN books b on bb.isbn = b.isbn "+"WHERE student_number = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(getBorrowedBooks);
+        preparedStatement.setInt(1, registrationNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        List<BorrowedBook> borrowedBooks = new ArrayList<>();
+
+        while (resultSet.next()) {
+            int studentNumber = resultSet.getInt("student_number");
+            String isbn = resultSet.getString("isbn");
+            // String bookTitle = resultSet.getString("book_title");
+
+            BorrowedBook borrowedBook = new BorrowedBook(isbn, studentNumber);
+            borrowedBooks.add(borrowedBook);
+
+        }
+        return borrowedBooks.toArray(new BorrowedBook[0]);
+    }
+
 }

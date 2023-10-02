@@ -32,3 +32,4 @@
 2023-10-02 19:39:31 | SEVERE | main | Something wrong with your database connection: Field 'book_title' doesn't have a default value
 2023-10-02 19:41:23 | INFO | borrowBook | Book successfully borrowed!
 2023-10-02 19:42:32 | SEVERE | borrowBook | Sorry book is not available!
+2023-10-02 20:11:28 | INFO | viewBooksBorrowedByStudent | No books borrowed by that student.
