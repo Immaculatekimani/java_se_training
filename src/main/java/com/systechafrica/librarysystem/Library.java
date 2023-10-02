@@ -38,7 +38,7 @@ public class Library {
                     Thread.sleep(1500);
 
                     switch (option) {
-                        case 1:
+                        case 1: // borrow book
                             boolean isBorrow = false;
                             app.borrowBook(connection);
                             do {
@@ -59,10 +59,9 @@ public class Library {
 
                             } while (isBorrow);
                             break;
-                        case 2:
-                            // ! books borrowed by a specific student
+                        case 2: // view borrowed books
                             System.out.println(
-                                    "Select one: \n 1: All Books Borrowed    \n 2: Books Borrowed by a student");
+                                    "Select an option: \n 1: All Books Borrowed    \n 2: Books Borrowed by a student");
                             int selection = app.scanner.nextInt();
                             app.scanner.nextLine();
                             if (selection == 1) {
@@ -74,9 +73,10 @@ public class Library {
                             }
 
                             break;
-                        case 3:
-                            // ! return book
-                        case 4:
+                        case 3: // return book
+                            app.returnBook(connection);
+                            break;
+                        case 4: // add books to library
                             boolean isRepeat = false;
                             app.addBook(connection);
                             do {
@@ -187,21 +187,26 @@ public class Library {
             }
 
         } else {
-            LOGGER.severe("Sorry book is not available!");
+            LOGGER.info("Sorry book is not available!");
         }
 
     }
 
     public void viewBorrowedBooks(Connection connection) throws SQLException {
         BorrowedBook[] borrowedBooks = BorrowedBook.getBorrowedBooks(connection);
+        if (borrowedBooks.length > 0) {
+            System.out.println("Borrowed Books");
+            System.out.println("Student Registration Number\t\tBook ISBN\t\tBook Title\t\t");
+            for (BorrowedBook bk : borrowedBooks) {
+                Book book = Book.findBook(connection, bk.getIsbn());
 
-        System.out.println("Borrowed Books");
-        System.out.println("Student Registration Number\t\tBook ISBN\t\tBook Title\t\t");
-        for (BorrowedBook bk : borrowedBooks) {
-            Book book = Book.findBook(connection, bk.getIsbn());
-
-            System.out.println(bk.getStudentNumber() + "\t\t\t\t\t" + bk.getIsbn() + "\t\t\t" + book.getBookTitle());
+                System.out
+                        .println(bk.getStudentNumber() + "\t\t\t\t\t" + bk.getIsbn() + "\t\t\t" + book.getBookTitle());
+            }
+        } else {
+            System.out.println("No books borrowed yet.");
         }
+
     }
 
     public void viewBooksBorrowedByStudent(Connection connection) throws SQLException {
@@ -223,4 +228,26 @@ public class Library {
         }
 
     }
+
+    public void returnBook(Connection connection) throws SQLException {
+
+        System.out.print("Enter book ISBN to search: ");
+        String isbn = scanner.next();
+        scanner.nextLine();
+
+        Book book = Book.findBook(connection, isbn);
+        if (book != null && !book.isAvailable()) {
+
+            BorrowedBook borrowedBook = BorrowedBook.findBorrowedBook(connection, isbn);
+            borrowedBook.deleteBorrowedBook(connection, isbn);
+            book.setAvailable(true);
+            book.updateAvailability(connection, isbn);
+            LOGGER.info("Book successfully returned!");
+
+        } else {
+            LOGGER.info("Book not found or not borrowed");
+        }
+
+    }
+
 }

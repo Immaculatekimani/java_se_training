@@ -82,12 +82,14 @@ public class BorrowedBook {
         return borrowedBooks.toArray(new BorrowedBook[0]);
     }
 
-    public static BorrowedBook[] getBooksBorrowedByStudent(Connection connection, int registrationNumber) throws SQLException {
-        String getBorrowedBooks = "SELECT bb.* FROM borrowed_books bb "+"JOIN books b on bb.isbn = b.isbn "+"WHERE student_number = ? ";
+    public static BorrowedBook[] getBooksBorrowedByStudent(Connection connection, int registrationNumber)
+            throws SQLException {
+        String getBorrowedBooks = "SELECT bb.* FROM borrowed_books bb " + "JOIN books b on bb.isbn = b.isbn "
+                + "WHERE student_number = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(getBorrowedBooks);
         preparedStatement.setInt(1, registrationNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        
+
         List<BorrowedBook> borrowedBooks = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -100,6 +102,32 @@ public class BorrowedBook {
 
         }
         return borrowedBooks.toArray(new BorrowedBook[0]);
+    }
+
+    public static BorrowedBook findBorrowedBook(Connection connection, String isbn) throws SQLException {
+        String findBook = "select * from borrowed_books where isbn = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(findBook);
+        preparedStatement.setString(1, isbn);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            String foundIsbn = resultSet.getString("isbn");
+            int studentNumber = resultSet.getInt("student_number");
+
+            BorrowedBook foundBorrowedBook = new BorrowedBook(foundIsbn, studentNumber);
+            return foundBorrowedBook;
+
+        }
+        return null;
+
+    }
+
+    public void deleteBorrowedBook(Connection connection, String isbn) throws SQLException{
+        String deleteBook = "DELETE FROM borrowed_books where isbn = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteBook);
+        preparedStatement.setString(1, isbn);
+        preparedStatement.executeUpdate();
+        
+        
     }
 
 }

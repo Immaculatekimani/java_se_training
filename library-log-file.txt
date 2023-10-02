@@ -33,3 +33,10 @@
 2023-10-02 19:41:23 | INFO | borrowBook | Book successfully borrowed!
 2023-10-02 19:42:32 | SEVERE | borrowBook | Sorry book is not available!
 2023-10-02 20:11:28 | INFO | viewBooksBorrowedByStudent | No books borrowed by that student.
+2023-10-02 20:32:19 | SEVERE | returnBook | Book not found or not borrowed
+2023-10-02 20:32:37 | SEVERE | main | Something wrong with your database connection: Duplicate entry '3892030e' for key 'books.isbn'
+2023-10-02 20:32:54 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
+2023-10-02 20:37:50 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
+2023-10-02 20:40:16 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
+2023-10-02 20:43:36 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
+2023-10-02 20:46:07 | INFO | returnBook | Book successfully returned!
