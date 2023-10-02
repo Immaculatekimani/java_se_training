@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.systechafrica.commonoperations.Operations;
+import com.systechafrica.exceptionhandling.CustomException;
 import com.systechafrica.logging.LibraryLogging;
 
 public class Library {
@@ -18,72 +19,91 @@ public class Library {
     public static void main(String[] args) {
         Operations opp = new Operations();
         boolean isLogin;
-        try {
-            isLogin = opp.login();
-            // !create db object
-            Library app = new Library();
-            LibraryLogging.logging();
+        isLogin = true; // ! create a login mechanism
+        // !create db object
+        Library app = new Library();
+        LibraryLogging.logging();
 
-            Connection connection = app.databaseConnection();
+        Connection connection = app.databaseConnection();
 
-            if (isLogin) {
-                System.out.println("Welcome " + opp.userName.toUpperCase());
-                boolean showMenu = true;
-                while (showMenu) {
-                    app.mainMenu();
-                    try {
-                        int option = app.scanner.nextInt();
-                        app.scanner.nextLine();
-                        System.out.println("LOADING...");
-                        Thread.sleep(1500);
+        if (isLogin) {
+            System.out.println("Welcome ");
+            boolean showMenu = true;
+            while (showMenu) {
+                app.mainMenu();
+                try {
+                    int option = app.scanner.nextInt();
+                    app.scanner.nextLine();
+                    System.out.println("LOADING...");
+                    Thread.sleep(1500);
 
-                        switch (option) {
-                            case 1:
-                                //! borrow book
-                            case 2:
-                                // !view borrowed book
-                                break;
-                            case 3:
-                                // ! return book
-                            case 4:
-                                boolean isRepeat = false;
-                                app.addBook(connection);
-                                do {
+                    switch (option) {
+                        case 1:
+                            // ! borrow book
+                            boolean isBorrow = false;
+                            app.borrowBook(connection);
+                            do {
 
-                                    System.out.println("Add another item? \n 1: Yes    \n 2: No");
-                                    int choice = app.scanner.nextInt();
-                                    app.scanner.nextLine();
-                                    if (choice == 1) {
-                                        isRepeat = true;
-                                        app.addBook(connection);
-                                    } else if (choice == 2) {
-                                        isRepeat = false;
-                                    } else {
-                                        System.out.println("Please select either 1 or 2");
-                                        isRepeat = true;
+                                System.out.println("Borrow another book? \n 1: Yes    \n 2: No");
+                                int choice = app.scanner.nextInt();
+                                app.scanner.nextLine();
+                                if (choice == 1) {
+                                    isBorrow = true;
+                                    app.borrowBook(connection);
+                                } else if (choice == 2) {
+                                    isBorrow = false;
+                                } else {
+                                    System.out.println("Please select either 1 or 2");
+                                    isBorrow = true;
 
-                                    }
+                                }
 
-                                } while (isRepeat);
-                                break;
-                                // !add book to library
-                            case 5:
-                                showMenu = false;
-                                return;
-                            default:
-                                System.out.println("Please select from options above");
-                        }
-                    } catch (InputMismatchException e) {
-                        app.scanner.nextLine();
-                        System.out.println("Please use numeric values");
+                            } while (isBorrow);
+                            break;
+                        case 2:
+                            // !view borrowed book
+                            break;
+                        case 3:
+                            // ! return book
+                        case 4:
+                            boolean isRepeat = false;
+                            app.addBook(connection);
+                            do {
+
+                                System.out.println("Add another item? \n 1: Yes    \n 2: No");
+                                int choice = app.scanner.nextInt();
+                                app.scanner.nextLine();
+                                if (choice == 1) {
+                                    isRepeat = true;
+                                    app.addBook(connection);
+                                } else if (choice == 2) {
+                                    isRepeat = false;
+                                } else {
+                                    System.out.println("Please select either 1 or 2");
+                                    isRepeat = true;
+
+                                }
+
+                            } while (isRepeat);
+                            break;
+                        // !add book to library
+                        case 5:
+                            showMenu = false;
+                            return;
+                        default:
+                            System.out.println("Please select from options above");
                     }
+                } catch (InputMismatchException e) {
+                    app.scanner.nextLine();
+                    System.out.println("Please use numeric values");
+                } catch (SQLException e) {
+                    LOGGER.severe("Something wrong with your database connection: " + e.getMessage());
+                } catch (InterruptedException e) {
+                    LOGGER.severe("Oops! the program is interrupted: " + e.getMessage());
                 }
-            } else {
-                System.out.println("You have exceeded your maximum attempts!");
             }
-
-        } catch (Exception e) {
-            // !impliment custom exceptions
+        } else {
+            System.out.println("You have exceeded your maximum attempts!");
         }
 
     }
@@ -106,23 +126,60 @@ public class Library {
 
     }
 
-    private Connection databaseConnection() throws SQLException {
-        String connectionUrl = "jdbc:mysql://localhost:3307/library";
-        String user = "javase";
-        String password = "javase";
-        return DriverManager.getConnection(connectionUrl, user, password);
+    private Connection databaseConnection() {
+
+        try {
+            String connectionUrl = "jdbc:mysql://localhost:3307/library";
+            String user = "javase";
+            String password = "javase";
+            return DriverManager.getConnection(connectionUrl, user, password);
+        } catch (SQLException e) {
+            LOGGER.severe("Unable to connect to the database: " + e.getMessage());
+            return null;
+        }
 
     }
 
-    public void addBook(Connection connection) throws SQLException{
-        System.out.print("Enter book title: ");
+    public void addBook(Connection connection) throws SQLException {
+        System.out.print("Enter book ISBN: ");
+        String isbn = scanner.nextLine();
+        System.out.print("Enter book Title: ");
         String title = scanner.nextLine();
-        System.out.print("Enter book author: ");
-        String author = scanner.nextLine();
 
-        Book book = new Book(title, author, true);
+        Book book = new Book(isbn, title, true);
         book.insertBook(connection);
 
         LOGGER.info(" book has been added to database successfully ");
+    }
+
+    public void borrowBook(Connection connection) throws SQLException {
+
+        System.out.print("Enter book ISBN to search: ");
+        String isbn = scanner.next();
+        scanner.nextLine();
+
+        Book book = Book.findBook(connection, isbn);
+        if (book != null && book.isAvailable()) {
+            System.out.print("Enter student number: ");
+            int studentNumber = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Enter book title: ");
+            String bookTitle = scanner.nextLine();
+            if (book.getBookTitle().toLowerCase().equals(bookTitle.toLowerCase())) {
+                BorrowedBook borrowedBook = new BorrowedBook(isbn, studentNumber, bookTitle);
+                borrowedBook.saveBook(connection);
+                book.setAvailable(false);
+                book.updateAvailability(connection, isbn);
+                System.out.println("true or false?: " + book.isAvailable());
+                LOGGER.info("Book successfully borrowed!");
+            } else {
+                LOGGER.severe("Sorry the book title does not match with the ISBN");
+            }
+
+        } else {
+            LOGGER.severe("Sorry book is not available!");
+        }
+
     }
 }

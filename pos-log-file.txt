@@ -163,3 +163,6 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-10-02 12:22:26 | INFO | createUsersTable | Users table has been created, status: 0
 2023-10-02 12:22:46 | INFO | clearItems | Items cleared successfully
 2023-10-02 12:22:46 | INFO | closeResources | Resources cleared successfully!
+2023-10-02 14:48:20 | SEVERE | databaseConnection | Connection failed: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.

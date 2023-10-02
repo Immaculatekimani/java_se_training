@@ -1,2 +1,29 @@
 2023-09-27 09:56:24 | INFO | addBook |  book has been added to database successfully 
 2023-09-27 09:57:24 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 14:46:24 | SEVERE | main | Something wrong with your database connection: Unknown column 'isbn' in 'field list'
+2023-10-02 14:49:00 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 14:49:12 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 16:33:40 | SEVERE | borrowBook | Sorry book is not available!
+2023-10-02 16:34:30 | SEVERE | borrowBook | Sorry book is not available!
+2023-10-02 16:36:18 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 16:36:55 | SEVERE | main | Something wrong with your database connection: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE book_id = 0' at line 1
+2023-10-02 16:39:10 | SEVERE | main | Something wrong with your database connection: Duplicate entry '765' for key 'borrowed_books.isbn'
+2023-10-02 16:39:35 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 16:40:03 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 16:56:21 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 16:58:12 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 17:02:17 | SEVERE | main | Something wrong with your database connection: Can't call commit when autocommit=true
+2023-10-02 17:08:09 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 17:29:39 | SEVERE | borrowBook | Sorry book is not available!
+2023-10-02 17:30:11 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 17:33:02 | INFO | borrowBook | Book succesfully borrowed!
+2023-10-02 17:44:58 | INFO | borrowBook | Book successfully borrowed!
+2023-10-02 17:45:11 | SEVERE | borrowBook | Sorry book is not available!
+2023-10-02 17:45:40 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 17:46:07 | SEVERE | borrowBook | Sorry the book title does not match with the ISBN
+2023-10-02 17:46:47 | INFO | borrowBook | Book successfully borrowed!
+2023-10-02 17:51:01 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 17:51:15 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 17:51:38 | INFO | borrowBook | Book successfully borrowed!
+2023-10-02 17:52:33 | SEVERE | borrowBook | Sorry the book title does not match with the ISBN
+2023-10-02 17:52:49 | INFO | borrowBook | Book successfully borrowed!
