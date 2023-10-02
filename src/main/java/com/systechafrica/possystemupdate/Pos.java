@@ -79,6 +79,7 @@ public class Pos {
                         case 4:
                             app.clearItems(connection);
                             db.closeResources(connection);
+                            app.scanner.close();
                             showMenu = false;
                             return;
                         default:
