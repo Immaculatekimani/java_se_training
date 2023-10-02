@@ -27,3 +27,8 @@
 2023-10-02 17:51:38 | INFO | borrowBook | Book successfully borrowed!
 2023-10-02 17:52:33 | SEVERE | borrowBook | Sorry the book title does not match with the ISBN
 2023-10-02 17:52:49 | INFO | borrowBook | Book successfully borrowed!
+2023-10-02 19:36:29 | INFO | addBook |  book has been added to database successfully 
+2023-10-02 19:37:07 | SEVERE | main | Something wrong with your database connection: No value specified for parameter 3
+2023-10-02 19:39:31 | SEVERE | main | Something wrong with your database connection: Field 'book_title' doesn't have a default value
+2023-10-02 19:41:23 | INFO | borrowBook | Book successfully borrowed!
+2023-10-02 19:42:32 | SEVERE | borrowBook | Sorry book is not available!

@@ -39,7 +39,6 @@ public class Library {
 
                     switch (option) {
                         case 1:
-                            // ! borrow book
                             boolean isBorrow = false;
                             app.borrowBook(connection);
                             do {
@@ -62,6 +61,7 @@ public class Library {
                             break;
                         case 2:
                             // !view borrowed book
+                            app.viewBorrowedBooks(connection);
                             break;
                         case 3:
                             // ! return book
@@ -86,7 +86,6 @@ public class Library {
 
                             } while (isRepeat);
                             break;
-                        // !add book to library
                         case 5:
                             showMenu = false;
                             return;
@@ -167,19 +166,30 @@ public class Library {
             System.out.print("Enter book title: ");
             String bookTitle = scanner.nextLine();
             if (book.getBookTitle().toLowerCase().equals(bookTitle.toLowerCase())) {
-                BorrowedBook borrowedBook = new BorrowedBook(isbn, studentNumber, bookTitle);
+                BorrowedBook borrowedBook = new BorrowedBook(isbn, studentNumber);
                 borrowedBook.saveBook(connection);
                 book.setAvailable(false);
                 book.updateAvailability(connection, isbn);
-                System.out.println("true or false?: " + book.isAvailable());
                 LOGGER.info("Book successfully borrowed!");
             } else {
-                LOGGER.severe("Sorry the book title does not match with the ISBN");
+                LOGGER.severe("Sorry the book title does not match with the ISBN, please try again");
             }
 
         } else {
             LOGGER.severe("Sorry book is not available!");
         }
 
+    }
+
+    public void viewBorrowedBooks(Connection connection) throws SQLException {
+        BorrowedBook[] borrowedBooks = BorrowedBook.getBorrowedBooks(connection);
+
+        System.out.println("Borrowed Books");
+        System.out.println("Student Registration Number\t\tBook ISBN\t\tBook Title\t\t");
+        for (BorrowedBook bk : borrowedBooks) {
+            Book book = Book.findBook(connection, bk.getIsbn());
+
+            System.out.println(bk.getStudentNumber() + "\t\t\t\t\t" + bk.getIsbn() + "\t\t\t" + book.getBookTitle());
+        }
     }
 }

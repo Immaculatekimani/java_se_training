@@ -103,10 +103,10 @@ public class Book {
 
     public void updateAvailability(Connection connection, String isbn) throws SQLException {
         String bookUpdate = "UPDATE books SET is_available = ? WHERE isbn = ?;";
-        PreparedStatement preparedStatement = connection.prepareStatement(bookUpdate);;
+        PreparedStatement preparedStatement = connection.prepareStatement(bookUpdate);
         preparedStatement.setBoolean(1, isAvailable);
         preparedStatement.setString(2, isbn);
         int updateStatus = preparedStatement.executeUpdate();
-        LOGGER.info("Book updated, status: "+updateStatus);
+        LOGGER.info("Book updated, status: " + updateStatus);
     }
 }

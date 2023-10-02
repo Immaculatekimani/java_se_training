@@ -2,21 +2,23 @@ package com.systechafrica.librarysystem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class BorrowedBook {
     private int id;
     private String isbn;
     private int studentNumber;
-    private String bookTitle;
+    // private String bookTitle;
     private static final Logger LOGGER = Logger.getLogger(Book.class.getName());
 
-    public BorrowedBook(String isbn, int studentNumber, String bookTitle) {
+    public BorrowedBook(String isbn, int studentNumber) {
         this.isbn = isbn;
         this.studentNumber = studentNumber;
-        this.bookTitle = bookTitle;
     }
 
     public BorrowedBook() {
@@ -46,27 +48,38 @@ public class BorrowedBook {
         this.isbn = isbn;
     }
 
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
     public void saveBook(Connection connection) throws SQLException {
-        String createBorrowedBooksTable = "CREATE TABLE IF NOT EXISTS borrowed_books (book_id INT AUTO_INCREMENT PRIMARY KEY,isbn VARCHAR(255) UNIQUE NOT NULL,student_number INT NOT NULL, book_title VARCHAR(255) NOT NULL)  ENGINE=INNODB;";
+        String createBorrowedBooksTable = "CREATE TABLE IF NOT EXISTS borrowed_books (book_id INT AUTO_INCREMENT PRIMARY KEY,isbn VARCHAR(255) UNIQUE NOT NULL,student_number INT NOT NULL)  ENGINE=INNODB;";
         Statement statement = connection.createStatement();
         int status = statement.executeUpdate(createBorrowedBooksTable);
         LOGGER.info("Borrowed books table created. Status: " + status);
 
-        String insertBorrowedBook = "insert into borrowed_books(isbn,student_number,book_title)values(?,?,?);";
+        String insertBorrowedBook = "insert into borrowed_books(isbn,student_number)values(?,?);";
         PreparedStatement preparedStatement = connection.prepareStatement(insertBorrowedBook);
         preparedStatement.setString(1, isbn);
         preparedStatement.setInt(2, studentNumber);
-        preparedStatement.setString(3, bookTitle);
+        // preparedStatement.setString(3, bookTitle);
         preparedStatement.executeUpdate();
 
+    }
+
+    public static BorrowedBook[] getBorrowedBooks(Connection connection) throws SQLException {
+        String getBorrowedBooks = "SELECT * FROM borrowed_books;";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getBorrowedBooks);
+
+        List<BorrowedBook> borrowedBooks = new ArrayList<>();
+
+        while (resultSet.next()) {
+            int studentNumber = resultSet.getInt("student_number");
+            String isbn = resultSet.getString("isbn");
+            // String bookTitle = resultSet.getString("book_title");
+
+            BorrowedBook borrowedBook = new BorrowedBook(isbn, studentNumber);
+            borrowedBooks.add(borrowedBook);
+
+        }
+        return borrowedBooks.toArray(new BorrowedBook[0]);
     }
 
 }
