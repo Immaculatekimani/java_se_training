@@ -62,3 +62,16 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-10-04 20:47:10 | INFO | createUsersTable | Users table has been created, status: 0
 2023-10-04 20:47:56 | INFO | returnBook | Book successfully returned!
 2023-10-04 20:48:21 | INFO | viewBooksBorrowedByStudent | No books borrowed by that student.
+2023-10-04 20:56:37 | INFO | createUsersTable | Users table has been created, status: 0
+2023-10-04 20:57:06 | INFO | borrowBook | Sorry book is not available!
+2023-10-04 20:57:32 | SEVERE | main | Sorry we only need positive values
+2023-10-04 20:59:04 | SEVERE | main | Sorry we only need positive values
+2023-10-04 20:59:32 | INFO | borrowBook | Book successfully borrowed!
+2023-10-04 20:59:44 | INFO | returnBook | Book successfully returned!
+2023-10-04 20:59:56 | INFO | returnBook | Book not found or not borrowed
+2023-10-04 21:05:29 | INFO | createUsersTable | Users table has been created, status: 0
+2023-10-04 21:05:48 | INFO | returnBook | Book not found or not borrowed
+2023-10-04 21:06:28 | INFO | borrowBook | Book successfully borrowed!
+2023-10-04 21:06:46 | INFO | returnBook | Book successfully returned!
+2023-10-04 21:07:13 | INFO | borrowBook | Sorry book is not available!
+2023-10-04 21:07:29 | SEVERE | main | Sorry we only need positive values

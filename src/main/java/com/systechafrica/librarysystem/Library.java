@@ -116,6 +116,8 @@ public class Library {
                     LOGGER.severe("Oops! the program is interrupted: " + e.getMessage());
                 } catch (NullPointerException e) {
                     LOGGER.severe("Sorry an item cannot be found: " + e.getMessage());
+                } catch (CustomException e) {
+                    LOGGER.severe((e.getMessage()));
                 }
             }
         } else {
@@ -195,7 +197,7 @@ public class Library {
         LOGGER.info(" book has been added to database successfully ");
     }
 
-    public void borrowBook(Connection connection) throws SQLException {
+    public void borrowBook(Connection connection) throws SQLException, CustomException, InterruptedException {
 
         System.out.print("Enter book ISBN to search: ");
         String isbn = scanner.next();
@@ -203,9 +205,14 @@ public class Library {
 
         Book book = Book.findBook(connection, isbn);
         if (book != null && book.isAvailable()) {
+            System.out.println("Searching...");
+            Thread.sleep(1500);
+            System.out.println("Book is available and can be borrowed");
+
             System.out.print("Enter student number: ");
             int studentNumber = scanner.nextInt();
             scanner.nextLine();
+            opp.checkIfNegative(studentNumber);
 
             System.out.print("Enter book title: ");
             String bookTitle = scanner.nextLine();
@@ -242,9 +249,11 @@ public class Library {
 
     }
 
-    public void viewBooksBorrowedByStudent(Connection connection) throws SQLException {
-        System.out.print("Enter Student Registration Number");
+    public void viewBooksBorrowedByStudent(Connection connection) throws SQLException, CustomException {
+        System.out.print("Enter Student Registration Number: ");
         int registrationNumber = scanner.nextInt();
+        opp.checkIfNegative(registrationNumber);
+
         BorrowedBook[] borrowedBooks = BorrowedBook.getBooksBorrowedByStudent(connection, registrationNumber);
 
         if (borrowedBooks.length > 0) {
@@ -262,7 +271,7 @@ public class Library {
 
     }
 
-    public void returnBook(Connection connection) throws SQLException {
+    public void returnBook(Connection connection) throws SQLException, InterruptedException {
 
         System.out.print("Enter book ISBN to search: ");
         String isbn = scanner.next();
@@ -270,6 +279,9 @@ public class Library {
 
         Book book = Book.findBook(connection, isbn);
         if (book != null && !book.isAvailable()) {
+            System.out.println("Searching...");
+            Thread.sleep(1500);
+            System.out.println("Book is borrowed");
 
             BorrowedBook borrowedBook = BorrowedBook.findBorrowedBook(connection, isbn);
             borrowedBook.deleteBorrowedBook(connection, isbn);
