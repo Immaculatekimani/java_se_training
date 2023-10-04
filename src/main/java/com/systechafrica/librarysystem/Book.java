@@ -63,7 +63,7 @@ public class Book {
     }
 
     public void insertBook(Connection connection) throws SQLException {
-        // initialise books table
+        // initialize books table
         String createBooksTable = "CREATE TABLE IF NOT EXISTS books (book_id INT AUTO_INCREMENT PRIMARY KEY,isbn VARCHAR(255) UNIQUE NOT NULL,book_title VARCHAR(255) NOT NULL,is_available BOOLEAN)  ENGINE=INNODB;";
         Statement statement = connection.createStatement();
         int tableStatus = statement.executeUpdate(createBooksTable);

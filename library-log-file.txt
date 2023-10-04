@@ -40,3 +40,25 @@
 2023-10-02 20:40:16 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
 2023-10-02 20:43:36 | SEVERE | main | Something wrong with your database connection: Table 'library.books_borrowed' doesn't exist
 2023-10-02 20:46:07 | INFO | returnBook | Book successfully returned!
+2023-10-04 20:24:48 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-10-04 20:28:07 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-10-04 20:28:41 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-10-04 20:33:45 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-10-04 20:43:54 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2023-10-04 20:45:08 | INFO | createUsersTable | Users table has been created, status: 0
+2023-10-04 20:45:09 | INFO | createUsersTable | Default user Admin has been added
+2023-10-04 20:45:58 | INFO | addBook |  book has been added to database successfully 
+2023-10-04 20:46:34 | INFO | borrowBook | Book successfully borrowed!
+2023-10-04 20:47:10 | INFO | createUsersTable | Users table has been created, status: 0
+2023-10-04 20:47:56 | INFO | returnBook | Book successfully returned!
+2023-10-04 20:48:21 | INFO | viewBooksBorrowedByStudent | No books borrowed by that student.

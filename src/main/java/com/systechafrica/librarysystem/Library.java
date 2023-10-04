@@ -10,21 +10,25 @@ import java.util.logging.Logger;
 import com.systechafrica.commonoperations.Operations;
 import com.systechafrica.exceptionhandling.CustomException;
 import com.systechafrica.logging.LibraryLogging;
+import com.systechafrica.possystemupdate.PosDatabase;
+import com.systechafrica.userdatabeseauthentication.UserDatabaseOperation;
 
 public class Library {
     private static final Logger LOGGER = Logger.getLogger(LibraryLogging.class.getName());
 
     Scanner scanner = new Scanner(System.in);
+    Operations opp = new Operations();
 
     public static void main(String[] args) {
-        Operations opp = new Operations();
-        boolean isLogin;
-        isLogin = true; // ! create a login mechanism
-        // !create db object
-        Library app = new Library();
         LibraryLogging.logging();
+        boolean isLogin;
+        Library app = new Library();
 
         Connection connection = app.databaseConnection();
+        UserDatabaseOperation users = new UserDatabaseOperation(LOGGER);
+        users.createUsersTable(connection);
+
+        isLogin = app.isAuthenticated(connection);
 
         if (isLogin) {
             System.out.println("Welcome ");
@@ -110,6 +114,8 @@ public class Library {
                     LOGGER.severe("Something wrong with your database connection: " + e.getMessage());
                 } catch (InterruptedException e) {
                     LOGGER.severe("Oops! the program is interrupted: " + e.getMessage());
+                } catch (NullPointerException e) {
+                    LOGGER.severe("Sorry an item cannot be found: " + e.getMessage());
                 }
             }
         } else {
@@ -148,6 +154,33 @@ public class Library {
             return null;
         }
 
+    }
+
+    public boolean isAuthenticated(Connection connection) {
+        try {
+            PosDatabase posDatabase = new PosDatabase();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("                       SYSTECH LIBRARY SYSTEM                  ");
+            System.out.println();
+            System.out.println("***************************************************************");
+            System.out.println();
+            System.out.println("Choose an option below: \n1: Register \n2: Login");
+            int programEntry = scanner.nextInt();
+            switch (programEntry) {
+                case 1:
+                    return posDatabase.registerUser(connection);
+                case 2:
+                    return posDatabase.authenticateDatabaseUser(connection);
+                default:
+                    System.out.println("Please select only the above");
+                    return false;
+
+            }
+        } catch (SQLException | InterruptedException e) {
+            LOGGER.severe("Unable to authenticate the user: " + e.getMessage());
+            return false;
+        }
     }
 
     public void addBook(Connection connection) throws SQLException {
