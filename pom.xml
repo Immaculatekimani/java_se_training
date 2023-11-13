@@ -76,6 +76,18 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.4.5</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.1.0</version>
+          <configuration>
+              <archive>
+                  <manifest>
+                      <mainClass>com.systechafrica.atmmachine.ATMMachine</mainClass>
+                  </manifest>
+              </archive>
+          </configuration>
+      </plugin>
       </plugins>
     </pluginManagement>
   </build>

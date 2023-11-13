@@ -75,3 +75,6 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 2023-10-04 21:06:46 | INFO | returnBook | Book successfully returned!
 2023-10-04 21:07:13 | INFO | borrowBook | Sorry book is not available!
 2023-10-04 21:07:29 | SEVERE | main | Sorry we only need positive values
+2023-11-13 10:08:40 | SEVERE | databaseConnection | Unable to connect to the database: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
